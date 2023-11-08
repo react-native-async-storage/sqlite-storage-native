@@ -1,0 +1,26 @@
+site_name: SQLite Storage
+repo_url: https://github.com/react-native-async-storage/sqlite-storage
+
+nav:
+  - Home: index.md
+
+theme:
+  name: material
+  palette:
+    primary: green
+    accent: teal
+  icon:
+    repo: fontawesome/brands/github
+  feature:
+    - navigation.tabs
+    - navigation.footer
+
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      name: AsyncStorage
+      link: https://github.com/react-native-async-storage/async-storage
