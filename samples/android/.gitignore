@@ -1,0 +1,17 @@
+*.apk
+*.aar
+*.ap_
+*.aab
+*.dex
+*.class
+.gradle/
+build/
+local.properties
+proguard/
+*.log
+.navigation/
+captures/
+.externalNativeBuild
+.cxx/
+*.hprof
+

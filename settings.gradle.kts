@@ -16,5 +16,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "SQLiteStorage"
 include(":sqlite-storage")
+include(":sample-android")
+project(":sample-android").projectDir = File(rootDir, "samples/android")
 
 includeBuild("storage-plugin")
