@@ -42,7 +42,7 @@ android {
   }
 
   defaultConfig {
-    compileSdk = getExtraIntOrDefault("compileSdkVersion", 33)
+    compileSdk = getExtraIntOrDefault("compileSdkVersion", 34)
     minSdk = getExtraIntOrDefault("minSdkVersion", 21)
     buildConfigField(
       "boolean",

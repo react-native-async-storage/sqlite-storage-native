@@ -1,6 +1,8 @@
 package org.asyncstorage.sqlitestorage.extensions
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.QueryResult
+import app.cash.sqldelight.db.SqlDriver
+
 
 /**
  * Makes sqlite use write-ahead logging for atomic commits and callback
@@ -8,16 +10,14 @@ import com.squareup.sqldelight.db.SqlDriver
  *
  * https://www.sqlite.org/wal.html
  */
-fun SqlDriver.executePragmaWalJournalMode(): Boolean {
-    val cursor = executeQuery(null, "PRAGMA journal_mode = WAL;", 0)
-    if (!cursor.next()) {
-        cursor.close()
-        return false
-    }
-    val result = cursor.getString(0)
-    cursor.close()
-    return result == "wal"
-}
+fun SqlDriver.executePragmaWalJournalMode(): Boolean =
+    executeQuery(null, "PRAGMA journal_mode = WAL;", mapper = { c ->
+        var result = false
+        if (c.next().value) {
+            result = c.getString(0) == "wal"
+        }
+        QueryResult.Value(result)
+    }, parameters = 0).value
 
 /**
  * Makes sqlite use Normal mode for synchronizing DB content with filesystem only in crucial times
@@ -26,27 +26,24 @@ fun SqlDriver.executePragmaWalJournalMode(): Boolean {
  * https://sqlite.org/pragma.html#pragma_synchronous
  */
 fun SqlDriver.executePragmaSyncNormal() {
-    executeQuery(null, "PRAGMA synchronous = NORMAL;", 0).close()
+    executeQuery(0, "PRAGMA synchronous=NORMAL;", { QueryResult.Unit }, 0)
 }
 
 /**
  * Calls checkpoint operation causing content from -wal file to be transferred to database file
  */
-fun SqlDriver.executePragmaWalCheckpoint(): Boolean {
-    val cursor = executeQuery(null, "PRAGMA wal_checkpoint(FULL);", 0)
-    if (!cursor.next()) {
-        cursor.close()
-        return false
-    }
-
-    /**
-     * This column is usually 0 but will be 1 if (FULL) checkpoint was blocked from completing,
-     * for example because another thread or process was actively using the database.
-     */
-    val result = cursor.getLong(0)
-    cursor.close()
-    return result == 0L
-}
+fun SqlDriver.executePragmaWalCheckpoint(): Boolean =
+    executeQuery(0, "PRAGMA wal_checkpoint(FULL);", mapper = { c ->
+        var success = false
+        if (c.next().value) {
+            /**
+             * Result is usually 0 but will be 1 if (FULL) checkpoint was blocked from completing,
+             * for example because another thread or process was actively using the database.
+             */
+            success = c.getLong(0) == 0L
+        }
+        QueryResult.Value(success)
+    }, parameters = 0).value
 
 /**
  * To achieve the best long-term query performance without the need to do a detailed engineering
@@ -56,5 +53,5 @@ fun SqlDriver.executePragmaWalCheckpoint(): Boolean {
  * https://www.sqlite.org/pragma.html#pragma_optimize
  */
 fun SqlDriver.executePragmaOptimize() {
-    executeQuery(null, "PRAGMA optimize;", 0).close()
+    executeQuery(null, sql = "PRAGMA optimize;", { QueryResult.Unit }, parameters = 0)
 }

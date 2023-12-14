@@ -26,9 +26,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.asyncstorage.sqlite.StorageAccess
-import com.asyncstorage.sqlite.models.Entry
 import kotlinx.coroutines.launch
+import org.asyncstorage.sqlitestorage.StorageAccess
+import org.asyncstorage.sqlitestorage.models.Entry
 
 @Composable
 fun SingleValue(db: StorageAccess) {

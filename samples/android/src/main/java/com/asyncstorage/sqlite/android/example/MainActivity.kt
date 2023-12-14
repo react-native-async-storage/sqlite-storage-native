@@ -3,9 +3,9 @@ package com.asyncstorage.sqlite.android.example
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.asyncstorage.sqlite.SQLiteStorageFactory
-import com.asyncstorage.sqlite.StorageAccess
 import com.asyncstorage.sqlite.android.example.ui.MainScreen
+import org.asyncstorage.sqlitestorage.SQLiteStorageFactory
+import org.asyncstorage.sqlitestorage.StorageAccess
 
 class MainActivity : AppCompatActivity() {
     lateinit var db: StorageAccess

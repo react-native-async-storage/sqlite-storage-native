@@ -26,7 +26,6 @@ import org.asyncstorage.sqlitestorage.extensions.isValidJson
  *      - for arrays, append new one to old one, add to merging object
  *      - for objects, repeat merge algorithm
  */
-
 private val format = Json
 
 fun mergePossibleJsonValues(
@@ -40,10 +39,8 @@ fun mergePossibleJsonValues(
     if (!old.isValidJson() || !new.isValidJson()) {
         return new
     }
-
     val oldJson = format.parseToJsonElement(old)
     val newJson = format.parseToJsonElement(new)
-
     val result = mergeElements(oldJson, newJson)
     return format.encodeToString(result)
 }

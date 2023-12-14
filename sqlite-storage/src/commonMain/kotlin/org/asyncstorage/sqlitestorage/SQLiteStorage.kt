@@ -1,12 +1,12 @@
 package org.asyncstorage.sqlitestorage
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.runtime.coroutines.asFlow
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.db.SqlDriver
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import org.asyncstorage.sqlitestorage.db.StorageDB
+import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
 import org.asyncstorage.sqlitestorage.extensions.executePragmaOptimize
 import org.asyncstorage.sqlitestorage.extensions.executePragmaSyncNormal
 import org.asyncstorage.sqlitestorage.extensions.executePragmaWalCheckpoint
@@ -21,7 +21,7 @@ internal class SQLiteStorage(
     private val dbUtils: DatabaseUtils,
     private val dispatcher: CoroutineDispatcher,
 ) : StorageAccess {
-    private val queries = StorageDB(driver).storageQueries
+    private val queries = AsyncStorageDB(driver).async_storage_entriesQueries
 
     init {
         /**
@@ -53,7 +53,7 @@ internal class SQLiteStorage(
         }
 
     override suspend fun merge(entry: Entry) =
-        withContext<Entry>(dispatcher) {
+        withContext(dispatcher) {
             queries.transactionWithResult {
                 val current = queries.getOne(entry.key).executeAsOneOrNull()
                 if (current == null) {

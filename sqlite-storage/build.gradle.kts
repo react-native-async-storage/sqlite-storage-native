@@ -62,14 +62,12 @@ sqldelight {
             packageName.set("org.asyncstorage.sqlitestorage.db")
             srcDirs("src/schema")
             dialect("app.cash.sqldelight:sqlite-3-24-dialect:${libs.versions.sqldelight.get()}")
-            migrationOutputDirectory.set(File(projectDir, "src/schema"))
-            deriveSchemaFromMigrations.set(true)
         }
     }
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "org.asyncstorage.sqlitestorage"
     defaultConfig {
         minSdk = 21

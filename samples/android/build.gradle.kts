@@ -5,12 +5,12 @@ plugins {
 
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "com.asyncstorage.sqlite.android.example"
     defaultConfig {
         applicationId = "com.asyncstorage.sqlite.android.example"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
@@ -26,7 +26,7 @@ android {
         jvmToolchain(17)
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.6"
     }
 }
 
@@ -37,7 +37,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation ("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:1.4.3")
-    implementation("androidx.compose.foundation:foundation:1.4.3")
-    implementation ("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.ui:ui:1.5.4")
+    implementation("androidx.compose.foundation:foundation:1.5.4")
+    implementation ("androidx.compose.material:material:1.5.4")
 }

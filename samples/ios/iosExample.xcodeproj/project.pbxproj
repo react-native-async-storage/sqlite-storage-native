@@ -305,9 +305,9 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = (
-					"\"$(inherited) -framework shared\"",
-					"\"$(inherited) -framework shared\"",
-					"\"$(inherited) -framework SqliteStorage\"",
+					"$(inherited)",
+					"-framework",
+					SqliteStorage,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.asyncstorage.sqlite.ios.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -333,9 +333,9 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = (
-					"\"$(inherited) -framework shared\"",
-					"\"$(inherited) -framework shared\"",
-					"\"$(inherited) -framework SqliteStorage\"",
+					"$(inherited)",
+					"-framework",
+					SqliteStorage,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.asyncstorage.sqlite.ios.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
