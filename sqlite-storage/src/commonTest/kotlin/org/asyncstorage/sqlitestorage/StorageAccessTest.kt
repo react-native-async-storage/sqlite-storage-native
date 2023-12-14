@@ -18,10 +18,11 @@ import kotlinx.coroutines.test.runTest as realRunTest
 class StorageAccessTest {
     private val testDispatcher = StandardTestDispatcher()
 
-    private fun createDb() = createTestDatabase(
-        "Test.db",
-        dispatcher = testDispatcher
-    )
+    private fun createDb() =
+        createTestDatabase(
+            "Test.db",
+            dispatcher = testDispatcher,
+        )
 
     private fun runTest(testBody: suspend TestScope.(db: SqliteStorage) -> Unit): TestResult {
         return realRunTest(context = testDispatcher, testBody = {
@@ -123,7 +124,7 @@ class StorageAccessTest {
             assertEquals(
                 6,
                 savedEntries.size,
-                "Saved entries after clear not matching required length"
+                "Saved entries after clear not matching required length",
             )
             savedEntries.forEach { assertNull(it.value, "Entry ${it.key} should cleared") }
         }
@@ -172,13 +173,13 @@ class StorageAccessTest {
                 assertEquals(
                     entries,
                     awaitItem(),
-                    "initial current entries not matching with emitted"
+                    "initial current entries not matching with emitted",
                 )
                 // override one entry
                 db.write(Entry("1", null))
                 assertNull(
                     awaitItem().find { it.key == "1" }!!.value,
-                    "Entry 1 should have null value"
+                    "Entry 1 should have null value",
                 )
                 // bring back to original value
                 db.write(Entry("1", "value1"))

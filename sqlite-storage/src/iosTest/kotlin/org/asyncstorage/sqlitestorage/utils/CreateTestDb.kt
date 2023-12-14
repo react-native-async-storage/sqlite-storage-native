@@ -24,7 +24,7 @@ actual fun createTestDatabase(
                     AsyncStorageDB.Schema.migrate(
                         it,
                         oldVersion.toLong(),
-                        newVersion.toLong()
+                        newVersion.toLong(),
                     )
                 }
             },

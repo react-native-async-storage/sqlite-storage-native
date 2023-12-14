@@ -3,7 +3,6 @@ package org.asyncstorage.sqlitestorage.extensions
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 
-
 /**
  * Makes sqlite use write-ahead logging for atomic commits and callback
  * Returns true if pragma ran successfully

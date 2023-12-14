@@ -20,7 +20,7 @@ internal class DefaultSqliteStorage(
     private val driver: SqlDriver,
     private val dbUtils: DatabaseUtils,
     private val readDispatcher: CoroutineDispatcher,
-    private val writeDispatcher: CoroutineDispatcher
+    private val writeDispatcher: CoroutineDispatcher,
 ) : SqliteStorage {
     private val queries = AsyncStorageDB(driver).async_storage_entriesQueries
 
@@ -143,10 +143,11 @@ internal class DefaultSqliteStorage(
             }
     }
 
-    override suspend fun closeConnection() = withContext(writeDispatcher) {
-        driver.executePragmaOptimize()
-        driver.close()
-    }
+    override suspend fun closeConnection() =
+        withContext(writeDispatcher) {
+            driver.executePragmaOptimize()
+            driver.close()
+        }
 
     override fun getDbPath() = dbUtils.getDbFilePath()
 

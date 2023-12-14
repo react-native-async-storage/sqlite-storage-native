@@ -14,7 +14,7 @@ actual class SQLiteStorageFactory(private val ctx: Context) {
             driver = driver,
             dbUtils = dbUtils,
             readDispatcher = DispatcherIO.limitedParallelism(3),
-            writeDispatcher = DispatcherIO.limitedParallelism(1)
+            writeDispatcher = DispatcherIO.limitedParallelism(1),
         )
     }
 }

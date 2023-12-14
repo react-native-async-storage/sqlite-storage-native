@@ -19,11 +19,11 @@ actual class SQLiteStorageFactory {
                 version = AsyncStorageDB.Schema.version.toInt(),
                 journalMode = JournalMode.WAL,
                 extendedConfig =
-                DatabaseConfiguration.Extended()
-                    .copy(
-                        synchronousFlag = SynchronousFlag.NORMAL,
-                        basePath = dbUtils.getDbBasePath(),
-                    ),
+                    DatabaseConfiguration.Extended()
+                        .copy(
+                            synchronousFlag = SynchronousFlag.NORMAL,
+                            basePath = dbUtils.getDbBasePath(),
+                        ),
                 create = { connection ->
                     wrapConnection(connection) { AsyncStorageDB.Schema.create(it) }
                 },
@@ -42,7 +42,7 @@ actual class SQLiteStorageFactory {
             driver = driver,
             dbUtils = dbUtils,
             readDispatcher = DispatcherIO.limitedParallelism(3),
-            writeDispatcher = DispatcherIO.limitedParallelism(1)
+            writeDispatcher = DispatcherIO.limitedParallelism(1),
         )
     }
 }
