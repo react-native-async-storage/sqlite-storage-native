@@ -1,12 +1,12 @@
 package org.asyncstorage.sqlitestorage.utils
 
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
-import com.squareup.sqldelight.drivers.native.wrapConnection
 import kotlinx.coroutines.CoroutineDispatcher
 import org.asyncstorage.sqlitestorage.SQLiteStorage
 import org.asyncstorage.sqlitestorage.StorageAccess
-import org.asyncstorage.sqlitestorage.db.StorageDB
+import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
 
 actual fun createTestDatabase(
     dbName: String,
@@ -16,12 +16,18 @@ actual fun createTestDatabase(
     val config =
         DatabaseConfiguration(
             name = dbName,
-            version = StorageDB.Schema.version,
+            version = AsyncStorageDB.Schema.version.toInt(),
             create = { connection ->
-                wrapConnection(connection) { StorageDB.Schema.create(it) }
+                wrapConnection(connection) { AsyncStorageDB.Schema.create(it) }
             },
             upgrade = { connection, oldVersion, newVersion ->
-                wrapConnection(connection) { StorageDB.Schema.migrate(it, oldVersion, newVersion) }
+                wrapConnection(connection) {
+                    AsyncStorageDB.Schema.migrate(
+                        it,
+                        oldVersion.toLong(),
+                        newVersion.toLong()
+                    )
+                }
             },
             inMemory = inMemory,
         )
