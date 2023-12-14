@@ -5,10 +5,10 @@ import org.asyncstorage.sqlitestorage.models.Entry
 import org.asyncstorage.sqlitestorage.models.Key
 
 /**
- * Main interface to interact with SQLite database
+ * Main interface to interact with Sqlite database
  * The connection is required for any database access action, otherwise an exception is thrown.
  */
-interface StorageAccess {
+interface SqliteStorage {
     /**
      * Reads a single entry, matching provided key.
      * If entry does not exist in database, Entry will contain `null` value.

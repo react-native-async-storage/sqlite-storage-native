@@ -2,22 +2,19 @@ package org.asyncstorage.sqlitestorage.utils
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import com.squareup.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import kotlinx.coroutines.CoroutineDispatcher
-import org.asyncstorage.sqlitestorage.SQLiteStorage
-import org.asyncstorage.sqlitestorage.StorageAccess
-import org.asyncstorage.sqlitestorage.db.StorageDB
+import org.asyncstorage.sqlitestorage.DefaultSqliteStorage
+import org.asyncstorage.sqlitestorage.SqliteStorage
+import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
 
 actual fun createTestDatabase(
     dbName: String,
     dispatcher: CoroutineDispatcher,
-    inMemory: Boolean,
-): StorageAccess {
+): SqliteStorage {
     val ctx = ApplicationProvider.getApplicationContext<Context>()
-
     // passing name as null to SupportSQLiteOpenHelper creates in-memory db
-    val realDbName = if (inMemory) null else dbName
-    val driver = AndroidSqliteDriver(StorageDB.Schema, ctx, realDbName)
-    val dbUtils = org.asyncstorage.sqlitestorage.utils.DatabaseUtils(dbName, ctx)
-    return SQLiteStorage(driver, dbUtils, dispatcher)
+    val driver = AndroidSqliteDriver(AsyncStorageDB.Schema, ctx, null)
+    val dbUtils = DatabaseUtils(dbName, ctx)
+    return DefaultSqliteStorage(driver, dbUtils, dispatcher, dispatcher)
 }

@@ -18,9 +18,12 @@ import kotlinx.coroutines.test.runTest as realRunTest
 class StorageAccessTest {
     private val testDispatcher = StandardTestDispatcher()
 
-    private fun createDb() = createTestDatabase("Test.db", dispatcher = testDispatcher, inMemory = true)
+    private fun createDb() = createTestDatabase(
+        "Test.db",
+        dispatcher = testDispatcher
+    )
 
-    private fun runTest(testBody: suspend TestScope.(db: StorageAccess) -> Unit): TestResult {
+    private fun runTest(testBody: suspend TestScope.(db: SqliteStorage) -> Unit): TestResult {
         return realRunTest(context = testDispatcher, testBody = {
             val db = createDb()
             testBody(db)
@@ -117,7 +120,11 @@ class StorageAccessTest {
             db.clear()
             savedEntries = db.readMany(entries.map { it.key })
             // keeps the same number of requested keys
-            assertEquals(6, savedEntries.size, "Saved entries after clear not matching required length")
+            assertEquals(
+                6,
+                savedEntries.size,
+                "Saved entries after clear not matching required length"
+            )
             savedEntries.forEach { assertNull(it.value, "Entry ${it.key} should cleared") }
         }
 
@@ -162,12 +169,17 @@ class StorageAccessTest {
             db.readManyAsFlow(entries.map { it.key }).test {
                 skipItems(1) // skip first where items are not available
                 db.writeMany(entries)
-                assertEquals(entries, awaitItem(), "initial current entries not matching with emitted")
-
+                assertEquals(
+                    entries,
+                    awaitItem(),
+                    "initial current entries not matching with emitted"
+                )
                 // override one entry
                 db.write(Entry("1", null))
-                assertNull(awaitItem().find { it.key == "1" }!!.value, "Entry 1 should have null value")
-
+                assertNull(
+                    awaitItem().find { it.key == "1" }!!.value,
+                    "Entry 1 should have null value"
+                )
                 // bring back to original value
                 db.write(Entry("1", "value1"))
                 assertEquals(entries, awaitItem(), "entries not matching expected original value")
@@ -186,7 +198,6 @@ class StorageAccessTest {
                 )
             db.getKeysAsFlow().test {
                 skipItems(1) // skip first emit where default null values are emitted
-
                 db.writeMany(entryList)
                 assertEquals(
                     listOf("1", "2", "3", "4"),

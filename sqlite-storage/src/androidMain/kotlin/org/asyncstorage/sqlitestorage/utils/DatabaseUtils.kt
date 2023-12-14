@@ -1,8 +1,9 @@
 package org.asyncstorage.sqlitestorage.utils
 
-import org.asyncstorage.sqlitestorage.models.AppContext
+import android.content.Context
 
-internal actual class DatabaseUtils(private val dbName: String, private val ctx: AppContext) {
+
+internal actual class DatabaseUtils(private val dbName: String, private val ctx: Context) {
     actual fun getDbFilePath(): String = ctx.getDatabasePath(dbName).absolutePath
 
     actual fun getDbFileSize(): Long {

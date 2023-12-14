@@ -16,11 +16,12 @@ import org.asyncstorage.sqlitestorage.models.Key
 import org.asyncstorage.sqlitestorage.utils.DatabaseUtils
 import org.asyncstorage.sqlitestorage.utils.mergePossibleJsonValues
 
-internal class SQLiteStorage(
+internal class DefaultSqliteStorage(
     private val driver: SqlDriver,
     private val dbUtils: DatabaseUtils,
-    private val dispatcher: CoroutineDispatcher,
-) : StorageAccess {
+    private val readDispatcher: CoroutineDispatcher,
+    private val writeDispatcher: CoroutineDispatcher
+) : SqliteStorage {
     private val queries = AsyncStorageDB(driver).async_storage_entriesQueries
 
     init {
@@ -35,7 +36,7 @@ internal class SQLiteStorage(
     }
 
     override suspend fun read(key: Key): Entry =
-        withContext(dispatcher) {
+        withContext(readDispatcher) {
             queries.getOne(key) { k, v -> Entry(k, v) }.executeAsOneOrNull() ?: Entry(key)
         }
 
@@ -48,12 +49,12 @@ internal class SQLiteStorage(
     }
 
     override suspend fun write(entry: Entry) =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.insertOne(entry.key, entry.value)
         }
 
     override suspend fun merge(entry: Entry) =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.transactionWithResult {
                 val current = queries.getOne(entry.key).executeAsOneOrNull()
                 if (current == null) {
@@ -68,12 +69,12 @@ internal class SQLiteStorage(
         }
 
     override suspend fun remove(key: Key) =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.deleteOne(key)
         }
 
     override suspend fun readMany(keys: List<Key>): List<Entry> =
-        withContext(dispatcher) {
+        withContext(readDispatcher) {
             val found = queries.getMany(keys) { k, v -> Entry(k, v) }.executeAsList()
             keys.map { key ->
                 found.find { it.key == key } ?: Entry(key)
@@ -92,7 +93,7 @@ internal class SQLiteStorage(
     }
 
     override suspend fun writeMany(entries: List<Entry>) =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.transaction {
                 entries.forEach { entry ->
                     queries.insertOne(entry.key, entry.value)
@@ -101,7 +102,7 @@ internal class SQLiteStorage(
         }
 
     override suspend fun mergeMany(entries: List<Entry>) =
-        withContext<List<Entry>>(dispatcher) {
+        withContext<List<Entry>>(writeDispatcher) {
             queries.transactionWithResult {
                 val result = mutableListOf<Entry>()
                 for (entry in entries) {
@@ -120,17 +121,17 @@ internal class SQLiteStorage(
         }
 
     override suspend fun removeMany(keys: List<Key>) =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.deleteMany(keys)
         }
 
     override suspend fun clear() =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             queries.deleteAll()
         }
 
     override suspend fun getKeys(): List<Key> =
-        withContext(dispatcher) {
+        withContext(readDispatcher) {
             queries.getAllKeys().executeAsList()
         }
 
@@ -142,7 +143,7 @@ internal class SQLiteStorage(
             }
     }
 
-    override suspend fun closeConnection() {
+    override suspend fun closeConnection() = withContext(writeDispatcher) {
         driver.executePragmaOptimize()
         driver.close()
     }
@@ -150,13 +151,13 @@ internal class SQLiteStorage(
     override fun getDbPath() = dbUtils.getDbFilePath()
 
     override suspend fun getDbSize(): Long =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             driver.executePragmaWalCheckpoint()
             dbUtils.getDbFileSize()
         }
 
     override suspend fun dropDatabase() =
-        withContext(dispatcher) {
+        withContext(writeDispatcher) {
             driver.close()
             dbUtils.removeDbFiles()
         }

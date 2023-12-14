@@ -10,7 +10,7 @@ import org.asyncstorage.sqlitestorage.dispatchers.DispatcherIO
 import org.asyncstorage.sqlitestorage.utils.DatabaseUtils
 
 actual class SQLiteStorageFactory {
-    actual fun create(dbName: String): StorageAccess {
+    actual fun create(dbName: String): SqliteStorage {
         val dbUtils = DatabaseUtils(dbName)
         dbUtils.createBaseDirectoryIfNotExisting()
         val config =
@@ -38,6 +38,11 @@ actual class SQLiteStorageFactory {
                 },
             )
         val driver = NativeSqliteDriver(config)
-        return SQLiteStorage(driver, dbUtils, DispatcherIO)
+        return DefaultSqliteStorage(
+            driver = driver,
+            dbUtils = dbUtils,
+            readDispatcher = DispatcherIO.limitedParallelism(3),
+            writeDispatcher = DispatcherIO.limitedParallelism(1)
+        )
     }
 }

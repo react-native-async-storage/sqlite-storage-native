@@ -5,10 +5,10 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.asyncstorage.sqlite.android.example.ui.MainScreen
 import org.asyncstorage.sqlitestorage.SQLiteStorageFactory
-import org.asyncstorage.sqlitestorage.StorageAccess
+import org.asyncstorage.sqlitestorage.SqliteStorage
 
 class MainActivity : AppCompatActivity() {
-    lateinit var db: StorageAccess
+    lateinit var db: SqliteStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
