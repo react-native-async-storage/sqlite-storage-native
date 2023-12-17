@@ -9,5 +9,5 @@ abstract class BundleExtension(@Inject private val project: Project) {
     val outputDir: DirectoryProperty = project.objects.directoryProperty()
 
 
-    val androidAarName: Property<String> = project.objects.property(String::class.java)
+    val binaryName: Property<String> = project.objects.property(String::class.java)
 }

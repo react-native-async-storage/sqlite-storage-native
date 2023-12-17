@@ -10,7 +10,7 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-internal abstract class SqliteStorageAndroidBundle : DefaultTask() {
+internal abstract class SqliteStorageAndroidBundleTask : DefaultTask() {
     override fun getGroup() = PLUGIN_GROUP
 
     override fun getDescription() = "Bundles release AAR and moves it to release directory"
@@ -22,11 +22,11 @@ internal abstract class SqliteStorageAndroidBundle : DefaultTask() {
     abstract val outputAarName: Property<String>
 
     @get:InputFile
-    abstract val sourceAarLocation: RegularFileProperty
+    abstract val sourceAar: RegularFileProperty
 
     @TaskAction
     fun execute() {
-        val aar = sourceAarLocation.get().asFile
+        val aar = sourceAar.get().asFile
         if (!aar.exists()) {
             throw IllegalStateException("AAR file not built")
         }
