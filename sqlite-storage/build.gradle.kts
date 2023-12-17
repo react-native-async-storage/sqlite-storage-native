@@ -66,6 +66,11 @@ sqldelight {
     }
 }
 
+asyncStorage {
+    outputDir.set(rootProject.file("nativeLib"))
+    androidAarName.set("sqlite-storage-android.aar")
+}
+
 android {
     compileSdk = 34
     namespace = "org.asyncstorage.sqlitestorage"

@@ -28,6 +28,7 @@ kotlin {
 repositories {
     gradlePluginPortal()
     mavenCentral()
+    google()
 }
 
 dependencies {

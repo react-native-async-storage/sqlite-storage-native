@@ -79,3 +79,5 @@ sqlite-storage/SqliteStorage.podspec
 
 # Bob
 lib/
+# native aar/xcframework
+nativeLib/

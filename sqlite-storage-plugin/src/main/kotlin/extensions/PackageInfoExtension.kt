@@ -24,7 +24,7 @@ data class PackageJsonContent(
  * package.json in root.
  */
 abstract class PackageInfoExtension(private val pckJson: PackageJsonContent) {
-    val group = "com.asyncstorage"
+    val group = "org.asyncstorage"
     val version: String
         get() = pckJson.version
 
