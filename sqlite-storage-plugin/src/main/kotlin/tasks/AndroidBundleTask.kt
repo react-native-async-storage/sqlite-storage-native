@@ -13,7 +13,7 @@ import org.gradle.api.tasks.TaskAction
 internal abstract class SqliteStorageAndroidBundleTask : DefaultTask() {
     override fun getGroup() = PLUGIN_GROUP
 
-    override fun getDescription() = "Bundles release AAR and moves it to release directory"
+    override fun getDescription() = "Creates release AAR and moves it to output dir"
 
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty

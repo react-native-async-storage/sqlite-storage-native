@@ -21,7 +21,9 @@
   "homepage": "https://github.com/react-native-async-storage/sqlite-storage",
   "packageManager": "yarn@4.0.2",
   "scripts": {
-    "lib:build": "bob build"
+    "build": "yarn build:js && yarn build:native",
+    "build:js": "bob build",
+    "build:native": "./gradlew sqlite-storage:bundleSqliteStorage"
   },
   "react-native-builder-bob": {
     "source": "src",

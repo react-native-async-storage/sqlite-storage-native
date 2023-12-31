@@ -68,7 +68,7 @@ sqldelight {
 
 asyncStorage {
     outputDir.set(rootProject.file("nativeLib"))
-    binaryName.set("sqlite-storage")
+    binaryName.set("sqlite-storage-${version}")
 }
 
 android {

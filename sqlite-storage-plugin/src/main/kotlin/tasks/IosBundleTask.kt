@@ -12,7 +12,7 @@ import org.gradle.api.tasks.TaskAction
 internal abstract class SqliteStorageIosBundleTask : DefaultTask() {
     override fun getGroup() = PLUGIN_GROUP
 
-    override fun getDescription() = "Bundles release XCFramework and moves it to release directory"
+    override fun getDescription() = "Creates release XCFramework and moves it to output dir"
 
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
@@ -27,7 +27,7 @@ internal abstract class SqliteStorageIosBundleTask : DefaultTask() {
     fun execute() {
         val framework = sourceFramework.get().asFile
         if (!framework.exists()) {
-            throw IllegalStateException("XCFramework not found at location ${framework.absolutePath}")
+            throw IllegalStateException("XCFramework not found at ${framework.absolutePath}")
         }
         val finalName: String = outputFrameworkName.get().let { name ->
             if (name.endsWith(".xcframework")) name
