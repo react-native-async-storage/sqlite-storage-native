@@ -1,19 +1,17 @@
 package org.asyncstorage.sqlite.plugin
 
 import org.asyncstorage.sqlite.plugin.extensions.BundleExtension
-import org.asyncstorage.sqlite.plugin.tasks.SqliteStorageAndroidBundleTask
-import org.asyncstorage.sqlite.plugin.tasks.SqliteStorageIosBundleTask
+import org.asyncstorage.sqlite.plugin.tasks.AndroidBundleTask
+import org.asyncstorage.sqlite.plugin.tasks.IosBundleTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.register
-
 
 private const val BUNDLE_TASK_NAME = "bundleSqliteStorage"
 
 fun Project.configureBundle(bundleConfig: BundleExtension) {
     val androidBundle = configureAndroidBundle(bundleConfig)
     val iosBundle = configureIosBundle(bundleConfig)
-
 
     tasks.register(BUNDLE_TASK_NAME) {
         group = PLUGIN_GROUP
@@ -23,13 +21,13 @@ fun Project.configureBundle(bundleConfig: BundleExtension) {
     }
 }
 
-
-private fun Project.configureIosBundle(bundleConfig: BundleExtension): TaskProvider<SqliteStorageIosBundleTask> {
-    val iosBundleTask = tasks.register<SqliteStorageIosBundleTask>("${BUNDLE_TASK_NAME}Ios") {
-        outputDir.set(bundleConfig.outputDir)
-        outputFrameworkName.set(bundleConfig.binaryName)
-        sourceFramework.set(project.layout.buildDirectory.dir("XCFrameworks/release/SqliteStorage.xcframework"))
-    }
+private fun Project.configureIosBundle(bundleConfig: BundleExtension): TaskProvider<IosBundleTask> {
+    val iosBundleTask =
+        tasks.register<IosBundleTask>("${BUNDLE_TASK_NAME}Ios") {
+            outputDir.set(bundleConfig.outputDir)
+            outputFrameworkName.set(bundleConfig.binaryName)
+            sourceFramework.set(project.layout.buildDirectory.dir("XCFrameworks/release/SqliteStorage.xcframework"))
+        }
 
     afterEvaluate {
         iosBundleTask.configure {
@@ -40,10 +38,9 @@ private fun Project.configureIosBundle(bundleConfig: BundleExtension): TaskProvi
     return iosBundleTask
 }
 
-
-private fun Project.configureAndroidBundle(bundleConfig: BundleExtension): TaskProvider<SqliteStorageAndroidBundleTask> {
+private fun Project.configureAndroidBundle(bundleConfig: BundleExtension): TaskProvider<AndroidBundleTask> {
     val androidBundleTask =
-        tasks.register<SqliteStorageAndroidBundleTask>("${BUNDLE_TASK_NAME}Android") {
+        tasks.register<AndroidBundleTask>("${BUNDLE_TASK_NAME}Android") {
             outputDir.set(bundleConfig.outputDir)
             outputAarName.set(bundleConfig.binaryName)
             sourceAar.set(project.layout.buildDirectory.file("outputs/aar/sqlite-storage-release.aar"))
@@ -56,5 +53,3 @@ private fun Project.configureAndroidBundle(bundleConfig: BundleExtension): TaskP
 
     return androidBundleTask
 }
-
-

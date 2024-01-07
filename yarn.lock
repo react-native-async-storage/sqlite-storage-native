@@ -1863,7 +1863,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-async-storage/sqlite-storage@workspace:."
   dependencies:
-    react: "npm:18.2.0"
     react-native: "npm:0.72.7"
     react-native-builder-bob: "npm:0.23.2"
     typescript: "npm:5.3.2"
@@ -5669,15 +5668,6 @@ __metadata:
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: c194d741792e86043a4ae272f7353c1cb9412bc649945c4220c6a101a6ea5410cceb3d65d5a4d750f11a24f7426e8eec7977e8a4e3ad5d3ee235ca2b18166fa8
-  languageName: node
-  linkType: hard
-
-"react@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
   languageName: node
   linkType: hard
 

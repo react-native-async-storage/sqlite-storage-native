@@ -5,9 +5,9 @@ import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import javax.inject.Inject
 
-abstract class BundleExtension(@Inject private val project: Project) {
+abstract class BundleExtension(
+    @Inject private val project: Project,
+) {
     val outputDir: DirectoryProperty = project.objects.directoryProperty()
-
-
     val binaryName: Property<String> = project.objects.property(String::class.java)
 }

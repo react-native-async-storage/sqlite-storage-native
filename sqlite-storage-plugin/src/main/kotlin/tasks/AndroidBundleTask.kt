@@ -10,7 +10,7 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-internal abstract class SqliteStorageAndroidBundleTask : DefaultTask() {
+internal abstract class AndroidBundleTask : DefaultTask() {
     override fun getGroup() = PLUGIN_GROUP
 
     override fun getDescription() = "Creates release AAR and moves it to output dir"
@@ -30,13 +30,14 @@ internal abstract class SqliteStorageAndroidBundleTask : DefaultTask() {
         if (!aar.exists()) {
             throw IllegalStateException("AAR file not built")
         }
-        val finalAarName = outputAarName.get().let { currentName ->
-            if (currentName.endsWith(".aar")) {
-                currentName
-            } else {
-                "${currentName}.aar"
+        val finalAarName =
+            outputAarName.get().let { currentName ->
+                if (currentName.endsWith(".aar")) {
+                    currentName
+                } else {
+                    "$currentName.aar"
+                }
             }
-        }
 
         aar.copyTo(target = outputDir.file(finalAarName).get().asFile, overwrite = true)
     }

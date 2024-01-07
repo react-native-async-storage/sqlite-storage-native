@@ -27,7 +27,6 @@ abstract class PackageInfoExtension(private val pckJson: PackageJsonContent) {
     val group = "org.asyncstorage"
     val version: String
         get() = pckJson.version
-
     val description: String
         get() = pckJson.description
     val homepage: String
