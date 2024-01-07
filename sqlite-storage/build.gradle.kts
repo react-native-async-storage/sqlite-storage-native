@@ -23,6 +23,18 @@ kotlin {
         }
     }
 
+
+
+    // disable expect-actual warning
+    targets.all {
+        compilations.all {
+            compilerOptions.configure {
+                freeCompilerArgs.add("-Xexpect-actual-classes")
+            }
+        }
+    }
+
+
     jvmToolchain(11)
 
     sourceSets {

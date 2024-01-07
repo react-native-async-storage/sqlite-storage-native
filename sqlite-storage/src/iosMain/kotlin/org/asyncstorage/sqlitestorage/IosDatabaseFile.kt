@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalForeignApi::class)
 
-package org.asyncstorage.sqlitestorage.utils
+package org.asyncstorage.sqlitestorage
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSApplicationSupportDirectory
@@ -11,48 +11,39 @@ import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDomainMask
 import platform.posix.remove
 
-internal actual class DatabaseUtils(private val dbName: String) {
+internal class IosDatabaseFile(private val dbName: String) : DatabaseFile {
     /**
-     * Database is located at
-     *  Application Support/App_Bundle_Id/${MainBundlename or SqliteStorage}/databases
+     * Main location to store database file is at
+     * Application Support/App_Bundle_Id/${MainBundleName or SqliteStorage}/databases
      */
-    fun getDbBasePath(): String {
+    @Suppress("UNCHECKED_CAST")
+    private val dbDir by lazy {
         val paths =
             NSSearchPathForDirectoriesInDomains(
                 NSApplicationSupportDirectory,
                 NSUserDomainMask,
                 true,
-            )
+            ) as List<String>
         val bundleId = NSBundle.mainBundle.bundleIdentifier ?: "SqliteStorage"
-        val docDirectory = paths[0] as String
-        return "$docDirectory/$bundleId/databases"
+        val docDirectory = paths.first()
+        "$docDirectory/$bundleId/databases"
     }
 
-    /**
-     * Make sure that database base parent directory exists upfront,
-     * otherwise "Unable to open db" is thrown
-     */
-    fun createBaseDirectoryIfNotExisting() {
-        val path = getDbBasePath()
-        val fm = NSFileManager.defaultManager
-        if (!fm.fileExistsAtPath(path)) {
-            fm.createDirectoryAtPath(path, true, null, null)
-        }
-    }
+    override fun path(): String = "$dbDir/$dbName"
 
-    actual fun getDbFilePath(): String = "${getDbBasePath()}/$dbName"
+    override fun dirPath() = dbDir
 
-    actual fun removeDbFiles(): Boolean {
+    override fun delete(): Boolean {
         val deleted = mutableListOf<Boolean>()
-        val dbFile = getDbFilePath()
+        val dbFile = path()
         listOf(dbFile, "$dbFile-wal", "$dbFile-shm").forEach { file ->
             deleted += remove(file) == 0
         }
         return deleted.all { it }
     }
 
-    actual fun getDbFileSize(): Long {
-        val file = getDbFilePath()
+    override fun size(): Long {
+        val file = path()
         var size = -1L
         try {
             val attrs = NSFileManager.defaultManager.attributesOfItemAtPath(file, null)
@@ -64,5 +55,16 @@ internal actual class DatabaseUtils(private val dbName: String) {
             // potentially means trying to get attributes file that does not exist
         }
         return size
+    }
+
+    /**
+     * Make sure that database base parent directory exists upfront,
+     * otherwise "Unable to open db" is thrown
+     */
+    internal fun createBaseDirectoryIfNotExisting() {
+        val fm = NSFileManager.defaultManager
+        if (!fm.fileExistsAtPath(dbDir)) {
+            fm.createDirectoryAtPath(dbDir, true, null, null)
+        }
     }
 }

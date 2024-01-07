@@ -1,5 +1,5 @@
 package org.asyncstorage.sqlitestorage
 
-expect class SQLiteStorageFactory {
+expect class SqliteStorageFactory {
     fun create(dbName: String): SqliteStorage
 }

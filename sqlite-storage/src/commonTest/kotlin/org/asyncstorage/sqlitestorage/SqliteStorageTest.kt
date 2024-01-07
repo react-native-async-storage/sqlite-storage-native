@@ -15,7 +15,7 @@ import kotlin.test.assertNull
 import kotlinx.coroutines.test.runTest as realRunTest
 
 @RunWith(JunitRunner::class)
-class StorageAccessTest {
+class SqliteStorageTest {
     private val testDispatcher = StandardTestDispatcher()
 
     private fun createDb() =

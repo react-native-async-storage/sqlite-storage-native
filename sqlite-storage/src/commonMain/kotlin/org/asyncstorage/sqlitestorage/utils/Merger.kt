@@ -13,8 +13,9 @@ import org.asyncstorage.sqlitestorage.extensions.isObject
 import org.asyncstorage.sqlitestorage.extensions.isValidJson
 
 /**
- * Merger Algorithm:
+ * Merges two serialized json values.
  *
+ * Merging rules:
  * - if either value is null, return new value
  * - if either value is not Json object or Json array, return new value
  * - if both values are valid JSON array, append new one to old one
@@ -26,9 +27,7 @@ import org.asyncstorage.sqlitestorage.extensions.isValidJson
  *      - for arrays, append new one to old one, add to merging object
  *      - for objects, repeat merge algorithm
  */
-private val format = Json
-
-fun mergePossibleJsonValues(
+internal fun mergePossibleJsonValues(
     old: String?,
     new: String?,
 ): String? {
@@ -39,24 +38,23 @@ fun mergePossibleJsonValues(
     if (!old.isValidJson() || !new.isValidJson()) {
         return new
     }
-    val oldJson = format.parseToJsonElement(old)
-    val newJson = format.parseToJsonElement(new)
+    val oldJson = Json.parseToJsonElement(old)
+    val newJson = Json.parseToJsonElement(new)
     val result = mergeElements(oldJson, newJson)
-    return format.encodeToString(result)
+    return Json.encodeToString(result)
 }
 
 private fun mergeElements(
     old: JsonElement,
     new: JsonElement,
-): JsonElement {
-    return if (old.isArray() && new.isArray()) {
+): JsonElement =
+    if (old.isArray() && new.isArray()) {
         mergeArrays(old.jsonArray, new.jsonArray)
     } else if (old.isObject() && new.isObject()) {
         mergeObjects(old.jsonObject, new.jsonObject)
     } else {
         new
     }
-}
 
 private fun mergeArrays(
     old: JsonArray,

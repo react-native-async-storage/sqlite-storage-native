@@ -6,13 +6,24 @@ import co.touchlab.sqliter.DatabaseConfiguration
 import co.touchlab.sqliter.JournalMode
 import co.touchlab.sqliter.SynchronousFlag
 import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
-import org.asyncstorage.sqlitestorage.dispatchers.DispatcherIO
-import org.asyncstorage.sqlitestorage.utils.DatabaseUtils
 
-actual class SQLiteStorageFactory {
+actual class SqliteStorageFactory {
     actual fun create(dbName: String): SqliteStorage {
-        val dbUtils = DatabaseUtils(dbName)
-        dbUtils.createBaseDirectoryIfNotExisting()
+        val dbFile =
+            IosDatabaseFile(dbName).apply {
+                createBaseDirectoryIfNotExisting()
+            }
+        val driver = createDriver(dbName, dbFile.dirPath())
+        return SqliteStorage(
+            driver = driver,
+            dbFile = dbFile,
+        )
+    }
+
+    private fun createDriver(
+        dbName: String,
+        dbDirectory: String,
+    ): NativeSqliteDriver {
         val config =
             DatabaseConfiguration(
                 name = dbName,
@@ -22,7 +33,7 @@ actual class SQLiteStorageFactory {
                     DatabaseConfiguration.Extended()
                         .copy(
                             synchronousFlag = SynchronousFlag.NORMAL,
-                            basePath = dbUtils.getDbBasePath(),
+                            basePath = dbDirectory,
                         ),
                 create = { connection ->
                     wrapConnection(connection) { AsyncStorageDB.Schema.create(it) }
@@ -37,12 +48,7 @@ actual class SQLiteStorageFactory {
                     }
                 },
             )
-        val driver = NativeSqliteDriver(config)
-        return DefaultSqliteStorage(
-            driver = driver,
-            dbUtils = dbUtils,
-            readDispatcher = DispatcherIO.limitedParallelism(3),
-            writeDispatcher = DispatcherIO.limitedParallelism(1),
-        )
+
+        return NativeSqliteDriver(config)
     }
 }

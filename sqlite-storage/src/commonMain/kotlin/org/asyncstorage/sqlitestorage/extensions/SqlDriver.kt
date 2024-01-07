@@ -4,31 +4,6 @@ import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 
 /**
- * Makes sqlite use write-ahead logging for atomic commits and callback
- * Returns true if pragma ran successfully
- *
- * https://www.sqlite.org/wal.html
- */
-fun SqlDriver.executePragmaWalJournalMode(): Boolean =
-    executeQuery(null, "PRAGMA journal_mode = WAL;", mapper = { c ->
-        var result = false
-        if (c.next().value) {
-            result = c.getString(0) == "wal"
-        }
-        QueryResult.Value(result)
-    }, parameters = 0).value
-
-/**
- * Makes sqlite use Normal mode for synchronizing DB content with filesystem only in crucial times
- * WAL file is synchronized before each checkpoint and the database file is synchronized after each completed checkpoint
- *
- * https://sqlite.org/pragma.html#pragma_synchronous
- */
-fun SqlDriver.executePragmaSyncNormal() {
-    executeQuery(0, "PRAGMA synchronous=NORMAL;", { QueryResult.Unit }, 0)
-}
-
-/**
  * Calls checkpoint operation causing content from -wal file to be transferred to database file
  */
 fun SqlDriver.executePragmaWalCheckpoint(): Boolean =

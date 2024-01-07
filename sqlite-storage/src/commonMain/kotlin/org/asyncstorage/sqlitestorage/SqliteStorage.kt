@@ -1,5 +1,6 @@
 package org.asyncstorage.sqlitestorage
 
+import app.cash.sqldelight.db.SqlDriver
 import kotlinx.coroutines.flow.Flow
 import org.asyncstorage.sqlitestorage.models.Entry
 import org.asyncstorage.sqlitestorage.models.Key
@@ -140,4 +141,14 @@ interface SqliteStorage {
      */
     @Throws(Throwable::class)
     suspend fun dropDatabase(): Boolean
+}
+
+fun SqliteStorage(
+    driver: SqlDriver,
+    dbFile: DatabaseFile,
+): SqliteStorage {
+    return DefaultSqliteStorage(
+        driver = driver,
+        dbFile = dbFile,
+    )
 }
