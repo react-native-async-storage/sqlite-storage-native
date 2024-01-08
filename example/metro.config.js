@@ -1,5 +1,5 @@
-const {mergeConfig, getDefaultConfig} = require("@react-native/metro-config");
-const path = require('path')
+const {mergeConfig, getDefaultConfig} = require('@react-native/metro-config');
+const path = require('path');
 /**
  * Metro configuration
  * https://facebook.github.io/metro/docs/configuration
@@ -11,8 +11,9 @@ const config = {
     path.resolve(__dirname, "..")
   ],
   resolver: {
-    unstable_enableSymlinks: true
-  }
+    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+    unstable_enableSymlinks: true,
+  },
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);
