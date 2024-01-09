@@ -1,3 +1,3 @@
 export type Key = string;
 export type Value = string | null;
-export type Entries = Record<Key, Value>
+export type Entries = Record<Key, Value>;

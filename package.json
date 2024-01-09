@@ -14,6 +14,7 @@
   "files": [
     "src",
     "lib",
+    "nativeLib",
     "AsyncStorageSqlite.podspec"
   ],
   "author": "Krzysztof Borowy <contact@kborowy.com>",
@@ -23,7 +24,8 @@
   "scripts": {
     "build": "yarn build:js && yarn build:native",
     "build:js": "bob build",
-    "build:native": "./gradlew sqlite-storage:bundleSqliteStorage"
+    "build:native": "./gradlew sqlite-storage:bundleSqliteStorage",
+    "test:lint": "eslint src/**/*.ts"
   },
   "react-native-builder-bob": {
     "source": "src",
@@ -40,6 +42,10 @@
     ]
   },
   "devDependencies": {
+    "@rnx-kit/eslint-plugin": "0.6.0",
+    "@types/eslint": "^8",
+    "eslint": "8.54.0",
+    "prettier": "2.8.8",
     "react-native": "0.72.7",
     "react-native-builder-bob": "0.23.2",
     "typescript": "5.3.2"

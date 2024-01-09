@@ -7,9 +7,7 @@ const path = require('path');
  * @type {import('metro-config').MetroConfig}
  */
 const config = {
-  watchFolders: [
-    path.resolve(__dirname, "..")
-  ],
+  watchFolders: [path.resolve(__dirname, '..')],
   resolver: {
     nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
     unstable_enableSymlinks: true,
