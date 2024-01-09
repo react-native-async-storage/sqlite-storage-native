@@ -1,5 +1,5 @@
 import type {AsyncStorageSqlite} from '@react-native-async-storage/sqlite-storage';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 
 type Props = {db: AsyncStorageSqlite};
@@ -22,6 +22,10 @@ const BasicCrud: React.FC<Props> = ({db}) => {
     await db.delete('random');
     await readValue();
   }
+
+  useEffect(() => {
+    readValue();
+  }, []);
 
   return (
     <View style={styles.container}>
