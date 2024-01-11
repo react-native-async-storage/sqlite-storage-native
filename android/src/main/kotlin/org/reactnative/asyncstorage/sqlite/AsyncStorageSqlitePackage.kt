@@ -1,4 +1,4 @@
-package org.asyncstorage.sqlite
+package org.reactnative.asyncstorage.sqlite
 
 import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.NativeModule

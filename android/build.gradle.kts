@@ -26,7 +26,7 @@ if (isNewArchitectureEnabled()) {
 
 android {
     if (supportsNamespace()) {
-        namespace = "org.asyncstorage.sqlite"
+        namespace = "org.reactnative.asyncstorage.sqlite"
     }
 
     buildFeatures {

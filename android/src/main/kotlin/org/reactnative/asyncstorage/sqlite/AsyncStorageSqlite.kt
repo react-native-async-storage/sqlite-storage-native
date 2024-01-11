@@ -1,4 +1,4 @@
-package org.asyncstorage.sqlite
+package org.reactnative.asyncstorage.sqlite
 
 
 import android.content.Context
