@@ -1,7 +1,7 @@
 {
   "name": "@react-native-async-storage/sqlite-storage-native",
   "version": "0.0.0",
-  "description": "Multiplatform SQLite storage for React Native AsyncStorage",
+  "description": "Multiplatform sqlite storage for React Native AsyncStorage",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "src/index.ts",

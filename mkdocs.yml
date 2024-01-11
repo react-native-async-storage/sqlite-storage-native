@@ -1,4 +1,4 @@
-site_name: SQLite Storage
+site_name: Async Storage Sqlite
 repo_url: https://github.com/react-native-async-storage/sqlite-storage
 
 nav:

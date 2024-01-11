@@ -1,6 +1,6 @@
-# SQLite Storage
+# Async Storage Sqlite
 
-Multiplatform SQLite storage for Async Storage.
+Multiplatform sqlite storage for React Native AsyncStorage
 
 ## Testing
 
@@ -11,7 +11,6 @@ Gradle tasks to run tests:
 `storageTestsAndroid` - run unit tests for Android platform
 
 `storageTestsIos` - run unit tests for iOS platform
-
 
 Re-running tests when tasks are up-to-date:
 
