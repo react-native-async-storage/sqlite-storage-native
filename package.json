@@ -1,25 +1,27 @@
 {
-  "name": "@react-native-async-storage/sqlite-storage-native",
-  "version": "0.0.0",
+  "name": "Async Storage Sqlite",
+  "private": true,
+  "version": "0.0.1",
   "description": "Multiplatform sqlite storage for React Native AsyncStorage",
-  "main": "lib/commonjs/index.js",
-  "module": "lib/module/index.js",
-  "react-native": "src/index.ts",
-  "types": "lib/typescript/index.d.ts",
   "repository": {
     "url": "https://github.com/react-native-async-storage/sqlite-storage.git",
     "owner": "react-native-async-storage",
     "name": "sqlite-storage"
   },
+  "author": "Krzysztof Borowy <contact@kborowy.com>",
+  "homepage": "https://github.com/react-native-async-storage/sqlite-storage",
+  "license": "MIT",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.ts",
+  "types": "lib/typescript/index.d.ts",
   "files": [
     "src",
     "lib",
     "nativeLib",
     "AsyncStorageSqlite.podspec"
   ],
-  "author": "Krzysztof Borowy <contact@kborowy.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/react-native-async-storage/sqlite-storage",
+
   "packageManager": "yarn@4.0.2",
   "scripts": {
     "build": "yarn build:js && yarn build:native",

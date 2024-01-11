@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SqliteStorage"
+rootProject.name = "AsyncStorageSqlite"
 include(":sqlite-storage")
 include(":sample-android")
 project(":sample-android").projectDir = File(rootDir, "samples/android")

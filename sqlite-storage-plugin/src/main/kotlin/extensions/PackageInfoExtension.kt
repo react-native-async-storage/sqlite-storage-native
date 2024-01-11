@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import java.io.File
 
 data class PackageJsonContent(
+    var name: String,
     var version: String,
     val description: String,
     val homepage: String,
@@ -24,9 +25,11 @@ data class PackageJsonContent(
  * package.json in root.
  */
 abstract class PackageInfoExtension(private val pckJson: PackageJsonContent) {
-    val group = "org.asyncstorage"
+    val group = "org.asyncstorage.sqlitestorage"
     val version: String
         get() = pckJson.version
+    val name: String
+        get() = pckJson.name
     val description: String
         get() = pckJson.description
     val homepage: String

@@ -35,5 +35,6 @@ dependencies {
     implementation(libs.gradlePlugin.testLogger)
     implementation(libs.gradlePlugin.kotlin)
     implementation(libs.gradlePlugin.spotless)
+    implementation(libs.gradlePlugin.publish)
     implementation(libs.gson)
 }

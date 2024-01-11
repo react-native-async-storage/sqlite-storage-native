@@ -2,6 +2,12 @@
 
 Multiplatform sqlite storage for React Native AsyncStorage
 
+## Usage
+
+```groovy
+implementation("io.github.react-native-async-storage:sqlite-storage:VERSION")
+```
+
 ## Testing
 
 Gradle tasks to run tests:
