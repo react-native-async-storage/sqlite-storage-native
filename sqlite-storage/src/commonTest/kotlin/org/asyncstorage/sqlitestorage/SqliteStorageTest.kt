@@ -130,35 +130,6 @@ class SqliteStorageTest {
         }
 
     @Test
-    fun reads_entry_on_change_as_flow() =
-        runTest { db ->
-            val entry = Entry("key1", "value123")
-
-            db.readAsFlow(entry.key).test {
-                skipItems(1) // skip initial emit, where value is null
-                db.write(entry)
-                assertEquals(
-                    entry,
-                    awaitItem(),
-                    "entry item is different then emitted one",
-                )
-                val copy = entry.copy(value = "987entry")
-                db.write(copy)
-                assertEquals(
-                    copy,
-                    awaitItem(),
-                    "copied item is different than emitted",
-                )
-                db.write(Entry("different"))
-                assertEquals(
-                    copy,
-                    awaitItem(),
-                    "copy value is changed after writing different value",
-                )
-            }
-        }
-
-    @Test
     fun reads_many_entries_on_change_as_flow() =
         runTest { db ->
             val entries =
@@ -167,7 +138,7 @@ class SqliteStorageTest {
                     Entry("2", "value2"),
                 )
 
-            db.readManyAsFlow(entries.map { it.key }).test {
+            db.readAsFlow(entries.map { it.key }).test {
                 skipItems(1) // skip first where items are not available
                 db.writeMany(entries)
                 assertEquals(
@@ -197,7 +168,7 @@ class SqliteStorageTest {
                     Entry("3", "entry_value_3"),
                     Entry("4", "entry_value_4"),
                 )
-            db.getKeysAsFlow().test {
+            db.readKeysAsFlow().test {
                 skipItems(1) // skip first emit where default null values are emitted
                 db.writeMany(entryList)
                 assertEquals(

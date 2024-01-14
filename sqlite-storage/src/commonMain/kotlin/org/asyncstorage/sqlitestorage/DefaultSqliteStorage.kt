@@ -1,6 +1,7 @@
 package org.asyncstorage.sqlitestorage
 
 import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.db.SqlDriver
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -23,21 +24,47 @@ internal class DefaultSqliteStorage(
 
     override suspend fun read(key: Key): Entry =
         withContext(dispatcher) {
-            queries.getOne(key) { k, v -> Entry(k, v) }.executeAsOneOrNull() ?: Entry(key)
+            queries.getOne(key, ::Entry).executeAsOneOrNull() ?: Entry(key)
         }
 
-    override fun readAsFlow(key: Key): Flow<Entry> {
-        return queries.getOne(key) { k, v -> Entry(k, v) }
-            .asFlow()
-            .map { q ->
-                q.executeAsOneOrNull() ?: Entry(key)
+    override suspend fun readMany(keys: List<Key>): List<Entry> =
+        withContext(dispatcher) {
+            val found = queries.getMany(keys, ::Entry).executeAsList()
+            keys.map { key ->
+                found.find { it.key == key } ?: Entry(key)
             }
+        }
+
+    override fun readAsFlow(keys: List<Key>): Flow<List<Entry>> {
+        return queries.getMany(keys, ::Entry)
+            .asFlow()
+            .mapToList(dispatcher)
     }
 
     override suspend fun write(entry: Entry) =
         withContext(dispatcher) {
             queries.insertOne(entry.key, entry.value)
         }
+
+    override suspend fun writeMany(entries: List<Entry>) =
+        withContext(dispatcher) {
+            queries.transaction {
+                entries.forEach { entry ->
+                    queries.insertOne(entry.key, entry.value)
+                }
+            }
+        }
+
+    override suspend fun remove(key: Key) =
+        withContext(dispatcher) {
+            queries.deleteOne(key)
+        }
+
+    override suspend fun removeMany(keys: List<Key>) =
+        withContext(dispatcher) {
+            queries.deleteMany(keys)
+        }
+
 
     override suspend fun merge(entry: Entry) =
         withContext(dispatcher) {
@@ -50,39 +77,6 @@ internal class DefaultSqliteStorage(
                     val merged = mergePossibleJsonValues(current.value_, entry.value)
                     queries.insertOne(entry.key, merged)
                     return@transactionWithResult Entry(entry.key, merged)
-                }
-            }
-        }
-
-    override suspend fun remove(key: Key) =
-        withContext(dispatcher) {
-            queries.deleteOne(key)
-        }
-
-    override suspend fun readMany(keys: List<Key>): List<Entry> =
-        withContext(dispatcher) {
-            val found = queries.getMany(keys) { k, v -> Entry(k, v) }.executeAsList()
-            keys.map { key ->
-                found.find { it.key == key } ?: Entry(key)
-            }
-        }
-
-    override fun readManyAsFlow(keys: List<Key>): Flow<List<Entry>> {
-        return queries.getMany(keys) { k, v -> Entry(k, v) }
-            .asFlow()
-            .map { q ->
-                val found = q.executeAsList()
-                keys.map { key ->
-                    found.find { it.key == key } ?: Entry(key)
-                }
-            }
-    }
-
-    override suspend fun writeMany(entries: List<Entry>) =
-        withContext(dispatcher) {
-            queries.transaction {
-                entries.forEach { entry ->
-                    queries.insertOne(entry.key, entry.value)
                 }
             }
         }
@@ -106,28 +100,23 @@ internal class DefaultSqliteStorage(
             }
         }
 
-    override suspend fun removeMany(keys: List<Key>) =
-        withContext(dispatcher) {
-            queries.deleteMany(keys)
-        }
-
-    override suspend fun clear() =
-        withContext(dispatcher) {
-            queries.deleteAll()
-        }
-
-    override suspend fun getKeys(): List<Key> =
+    override suspend fun readKeys(): List<Key> =
         withContext(dispatcher) {
             queries.getAllKeys().executeAsList()
         }
 
-    override fun getKeysAsFlow(): Flow<List<Key>> {
+    override fun readKeysAsFlow(): Flow<List<Key>> {
         return queries.getAllKeys()
             .asFlow()
             .map { q ->
                 q.executeAsList()
             }
     }
+
+    override suspend fun clear() =
+        withContext(dispatcher) {
+            queries.deleteAll()
+        }
 
     override suspend fun closeConnection() =
         withContext(dispatcher) {

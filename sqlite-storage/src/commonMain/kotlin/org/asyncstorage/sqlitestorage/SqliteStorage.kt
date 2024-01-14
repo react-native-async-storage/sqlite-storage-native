@@ -19,38 +19,6 @@ interface SqliteStorage {
     suspend fun read(key: Key): Entry
 
     /**
-     * Equivalent to [read] function, but returns a flow of Entry instead.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    fun readAsFlow(key: Key): Flow<Entry>
-
-    /**
-     * Writes a single entry to database.
-     * If Entry already exists in db, it will be overridden with new value.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    suspend fun write(entry: Entry)
-
-    /**
-     * Merges given entry's value with stored entry, based on Merger Algorithm.
-     * Creates the entry if not existing.
-     * Returns merged entry.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    suspend fun merge(entry: Entry): Entry
-
-    /**
-     * Removes a single entry based on provided key.
-     * If entry does not exist in db, the operation is a noop.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    suspend fun remove(key: Key)
-
-    /**
      * Returns a list of entries that match given key list.
      * If an entry is not found for selected key, the returned Entry will have `null` value.
      * Throws if DB connection is closed.
@@ -63,7 +31,15 @@ interface SqliteStorage {
      * Throws if DB connection is closed.
      */
     @Throws(Throwable::class)
-    fun readManyAsFlow(keys: List<Key>): Flow<List<Entry>>
+    fun readAsFlow(keys: List<Key>): Flow<List<Entry>>
+
+    /**
+     * Writes a single entry to database.
+     * If Entry already exists in db, it will be overridden with new value.
+     * Throws if DB connection is closed.
+     */
+    @Throws(Throwable::class)
+    suspend fun write(entry: Entry)
 
     /**
      * Stores multiple entries in one transaction.
@@ -72,6 +48,30 @@ interface SqliteStorage {
      */
     @Throws(Throwable::class)
     suspend fun writeMany(entries: List<Entry>)
+
+    /**
+     * Removes a single entry based on provided key.
+     * If entry does not exist in db, the operation is a noop.
+     * Throws if DB connection is closed.
+     */
+    @Throws(Throwable::class)
+    suspend fun remove(key: Key)
+
+    /**
+     * Removes multiple entries that match Key in provided key list.
+     * Throws if DB connection is closed.
+     */
+    @Throws(Throwable::class)
+    suspend fun removeMany(keys: List<Key>)
+
+    /**
+     * Merges given entry's value with stored entry, based on Merger Algorithm.
+     * Creates the entry if not existing.
+     * Returns merged entry.
+     * Throws if DB connection is closed.
+     */
+    @Throws(Throwable::class)
+    suspend fun merge(entry: Entry): Entry
 
     /**
      * Merged multiple entries, with entries already existing.
@@ -83,25 +83,18 @@ interface SqliteStorage {
     suspend fun mergeMany(entries: List<Entry>): List<Entry>
 
     /**
-     * Removes multiple entries that match Key in provided key list.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    suspend fun removeMany(keys: List<Key>)
-
-    /**
      * Returns a list of all Keys stored in db.
      * Throws if DB connection is closed.
      */
     @Throws(Throwable::class)
-    suspend fun getKeys(): List<Key>
+    suspend fun readKeys(): List<Key>
 
     /**
-     * Equivalent to [getKeys], but returns a Flow of List of keys instead.
+     * Equivalent to [readKeys], but returns a Flow of List of keys instead.
      * Throws if DB connection is closed.
      */
     @Throws(Throwable::class)
-    fun getKeysAsFlow(): Flow<List<Key>>
+    fun readKeysAsFlow(): Flow<List<Key>>
 
     /**
      * Clears every Entry from the database, effectively bringing it to empty state.

@@ -3,12 +3,6 @@ CREATE TABLE async_storage_entries (
     value TEXT
 );
 
-
--- This statement causes Android driver to crash, therefore it needs to be executed on driver,
--- before any other sql statement
--- PRAGMA journal_mode=WAL;
-
--- Single entry operations
 insertOne:
 INSERT OR REPLACE INTO async_storage_entries (key, value) VALUES (:key, :value);
 
@@ -18,10 +12,10 @@ SELECT key, value FROM async_storage_entries WHERE key = :key;
 deleteOne:
 DELETE FROM async_storage_entries WHERE key = :key;
 
--- Batch insert will be supported in SQLDelight v2, for now, transaction will be used
--- https://github.com/cashapp/sqldelight/discussions/2802
+-- Need to wait for batch operation support
+-- https://github.com/cashapp/sqldelight/issues/3260
 -- insertMany {
---     UPDATE async_storage_entries
+--     UPDATE async_storage_entries SET key = ?
 -- }
 
 getMany:
