@@ -3,7 +3,12 @@ import SqliteStorage
 
 
 struct DbAccess {
-    private let db: StorageAccess = SQLiteStorageFactory().create(dbName: "my_db")
+    private let db: SqliteStorage = SqliteStorageFactory().create(dbName: "my_db")
+    
+    
+    func saveSingle(key: String, value: String) async throws -> Void {
+        try! await db.write(entry: Entry(key: key, value: value))
+    }
     
     
     func saveEntry(entry: Entry) async throws -> Void {
