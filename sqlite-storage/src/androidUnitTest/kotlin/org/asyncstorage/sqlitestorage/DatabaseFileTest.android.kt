@@ -6,7 +6,7 @@ import org.asyncstorage.sqlitestorage.utils.JunitRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 
-internal actual fun createDatabaseFile(name: String): DatabaseFile {
+internal actual fun createDatabaseFile(name: String): DatabaseFiles {
     val ctx: Context = ApplicationProvider.getApplicationContext()
     return AndroidDatabaseFile(ctx.getDatabasePath(name))
 }
@@ -18,9 +18,23 @@ class AndroidDatabaseFileTest {
         val dbName = "testing_my_db.db"
         val file = createDatabaseFile(dbName)
         val dbPath = file.path()
-        val expected = "databases/$dbName"
-        assert(dbPath.endsWith("databases/$dbName")) {
-            "db path not matching, expected: $expected, received: $dbPath"
+
+        with(file.path()) {
+            assert(this.endsWith(dbName)) {
+                "db path not matching, expected: $dbName, received: $this"
+            }
+        }
+
+        with(file.path(DatabaseFileType.Index)) {
+            assert(this.endsWith("${dbName}-shm")) {
+                "index path not matching, expected: ${dbName}-shm, received: $this"
+            }
+        }
+
+        with(file.path(DatabaseFileType.Wal)) {
+            assert(this.endsWith("${dbName}-wal")) {
+                "wal path not matching, expected: ${dbName}-wal, received: $this"
+            }
         }
     }
 }

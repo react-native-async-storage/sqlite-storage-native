@@ -28,7 +28,7 @@ class SqliteStorageTest {
         return realRunTest(context = testDispatcher, testBody = {
             val db = createDb()
             testBody(db)
-            db.dropDatabase()
+            db.clear()
         })
     }
 

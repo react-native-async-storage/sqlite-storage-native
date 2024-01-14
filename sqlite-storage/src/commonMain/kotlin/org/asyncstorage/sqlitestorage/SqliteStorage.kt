@@ -11,6 +11,12 @@ import org.asyncstorage.sqlitestorage.models.Key
  */
 interface SqliteStorage {
     /**
+     * Access database files related to instance of this SqliteStorage directly
+     * See [DatabaseFiles]
+     */
+    val files: DatabaseFiles
+
+    /**
      * Reads a single entry, matching provided key.
      * If entry does not exist in database, Entry will contain `null` value.
      * Throws if DB connection is closed.
@@ -110,38 +116,14 @@ interface SqliteStorage {
      */
     @Throws(Throwable::class)
     suspend fun closeConnection()
-
-    /**
-     * Returns an absolute path to database file on the device.
-     */
-    fun getDbPath(): String
-
-    /**
-     * Returns a size of database file on filesystem, in KB.
-     * If file does not exist, or there's an exception while accessing it, returns -1.
-     * Throws if DB connection is closed.
-     */
-    @Throws(Throwable::class)
-    suspend fun getDbSize(): Long
-
-    /**
-     * Closes current connection to database and removes its file from filesystem.
-     * After this action, this StorageAccess instance should no longer be used.
-     * Returns boolean if file deletion was successful or not.
-     * Throws if DB connection is closed.
-     *
-     * This action is not recoverable.
-     */
-    @Throws(Throwable::class)
-    suspend fun dropDatabase(): Boolean
 }
 
 fun SqliteStorage(
     driver: SqlDriver,
-    dbFile: DatabaseFile,
+    dbFile: DatabaseFiles,
 ): SqliteStorage {
     return DefaultSqliteStorage(
         driver = driver,
-        dbFile = dbFile,
+        files = dbFile,
     )
 }

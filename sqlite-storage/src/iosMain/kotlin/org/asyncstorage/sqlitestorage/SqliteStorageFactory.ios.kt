@@ -30,11 +30,11 @@ actual class SqliteStorageFactory {
                 version = AsyncStorageDB.Schema.version.toInt(),
                 journalMode = JournalMode.WAL,
                 extendedConfig =
-                    DatabaseConfiguration.Extended()
-                        .copy(
-                            synchronousFlag = SynchronousFlag.NORMAL,
-                            basePath = dbDirectory,
-                        ),
+                DatabaseConfiguration.Extended()
+                    .copy(
+                        synchronousFlag = SynchronousFlag.NORMAL,
+                        basePath = dbDirectory,
+                    ),
                 create = { connection ->
                     wrapConnection(connection) { AsyncStorageDB.Schema.create(it) }
                 },

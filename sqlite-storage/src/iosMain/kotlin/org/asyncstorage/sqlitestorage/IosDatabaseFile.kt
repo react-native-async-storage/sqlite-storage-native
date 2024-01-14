@@ -11,7 +11,7 @@ import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDomainMask
 import platform.posix.remove
 
-internal class IosDatabaseFile(private val dbName: String) : DatabaseFile {
+internal class IosDatabaseFile(private val dbName: String) : DatabaseFiles {
     /**
      * Main location to store database file is at
      * Application Support/App_Bundle_Id/${MainBundleName or SqliteStorage}/databases
@@ -29,32 +29,38 @@ internal class IosDatabaseFile(private val dbName: String) : DatabaseFile {
         "$docDirectory/$bundleId/databases"
     }
 
-    override fun path(): String = "$dbDir/$dbName"
+    override fun path(type: DatabaseFileType): String =
+        when (type) {
+            DatabaseFileType.Main -> "$dbDir/$dbName"
+            DatabaseFileType.Wal -> "$dbDir/$dbName-wal"
+            DatabaseFileType.Index -> "$dbDir/$dbName-shm"
+        }
 
     override fun dirPath() = dbDir
 
     override fun delete(): Boolean {
         val deleted = mutableListOf<Boolean>()
-        val dbFile = path()
-        listOf(dbFile, "$dbFile-wal", "$dbFile-shm").forEach { file ->
+        listOf(
+            path(DatabaseFileType.Main),
+            path(DatabaseFileType.Wal),
+            path(DatabaseFileType.Index)
+        ).forEach { file ->
             deleted += remove(file) == 0
         }
         return deleted.all { it }
     }
 
-    override fun size(): Long {
-        val file = path()
-        var size = -1L
-        try {
+    override fun size(type: DatabaseFileType): Long? {
+        val file = path(type)
+        return try {
             val attrs = NSFileManager.defaultManager.attributesOfItemAtPath(file, null)
             val fileSize = attrs?.get(NSFileSize) as Long?
-            if (fileSize != null) {
-                size = fileSize / 1024L
+            fileSize?.let {
+                it / 1024L
             }
         } catch (e: Exception) {
-            // potentially means trying to get attributes file that does not exist
+            return null
         }
-        return size
     }
 
     /**

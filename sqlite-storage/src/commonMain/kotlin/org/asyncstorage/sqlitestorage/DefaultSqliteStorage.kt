@@ -10,14 +10,13 @@ import kotlinx.coroutines.withContext
 import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
 import org.asyncstorage.sqlitestorage.dispatchers.DispatcherIO
 import org.asyncstorage.sqlitestorage.extensions.executePragmaOptimize
-import org.asyncstorage.sqlitestorage.extensions.executePragmaWalCheckpoint
 import org.asyncstorage.sqlitestorage.models.Entry
 import org.asyncstorage.sqlitestorage.models.Key
 import org.asyncstorage.sqlitestorage.utils.mergePossibleJsonValues
 
 internal class DefaultSqliteStorage(
     private val driver: SqlDriver,
-    private val dbFile: DatabaseFile,
+    override val files: DatabaseFiles,
     private val dispatcher: CoroutineDispatcher = DispatcherIO,
 ) : SqliteStorage {
     private val queries = AsyncStorageDB(driver).async_storage_entriesQueries
@@ -122,19 +121,5 @@ internal class DefaultSqliteStorage(
         withContext(dispatcher) {
             driver.executePragmaOptimize()
             driver.close()
-        }
-
-    override fun getDbPath() = dbFile.path()
-
-    override suspend fun getDbSize(): Long =
-        withContext(dispatcher) {
-            driver.executePragmaWalCheckpoint()
-            dbFile.size()
-        }
-
-    override suspend fun dropDatabase() =
-        withContext(dispatcher) {
-            driver.close()
-            dbFile.delete()
         }
 }

@@ -2,19 +2,25 @@ package org.asyncstorage.sqlitestorage
 
 import java.io.File
 
-internal class AndroidDatabaseFile(private val dbFile: File) : DatabaseFile {
-    override fun path(): String = dbFile.absolutePath
+internal class AndroidDatabaseFile(private val dbFile: File) : DatabaseFiles {
+    override fun path(type: DatabaseFileType): String = when (type) {
+        DatabaseFileType.Main -> dbFile.absolutePath
+        DatabaseFileType.Wal -> "${dbFile.absolutePath}-wal"
+        DatabaseFileType.Index -> "${dbFile.absolutePath}-shm"
+    }
 
     override fun dirPath(): String = dbFile.parentFile!!.absolutePath
 
     override fun delete(): Boolean {
-        val dbName = dbFile.name
         return try {
-            val parent = dbFile.parentFile!!
             val deleted = mutableListOf<Boolean>()
 
-            listOf(dbName, "$dbName-wal", "$dbName-shm").forEach { dbFile ->
-                deleted += File(parent, dbFile).delete()
+            listOf(
+                path(DatabaseFileType.Main),
+                path(DatabaseFileType.Wal),
+                path(DatabaseFileType.Index)
+            ).forEach { path ->
+                deleted += File(path).delete()
             }
             true
         } catch (e: SecurityException) {
@@ -23,11 +29,12 @@ internal class AndroidDatabaseFile(private val dbFile: File) : DatabaseFile {
         }
     }
 
-    override fun size(): Long {
-        var size = -1L
-        if (dbFile.exists()) {
-            size = (dbFile.length() / 1024L)
+    override fun size(type: DatabaseFileType): Long? {
+        val file = File(path(type))
+        return if (file.exists()) {
+            (dbFile.length() / 1024L)
+        } else {
+            null
         }
-        return size
     }
 }

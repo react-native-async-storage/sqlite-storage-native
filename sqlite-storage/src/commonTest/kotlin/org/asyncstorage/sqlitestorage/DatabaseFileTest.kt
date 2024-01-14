@@ -7,7 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal expect fun createDatabaseFile(name: String = "Test"): DatabaseFile
+internal expect fun createDatabaseFile(name: String = "Test"): DatabaseFiles
 
 @RunWith(JunitRunner::class)
 class DatabaseFileTest {
@@ -16,7 +16,7 @@ class DatabaseFileTest {
         val dbName = "testing_my_db.db"
         val file = createDatabaseFile(dbName)
         val dbPath = file.dirPath()
-        assertTrue(file.dirPath().endsWith("databases/$dbName"), "db path not matching $dbPath")
+        assertTrue(file.dirPath().endsWith("/databases"), "db path not matching $dbPath")
     }
 
     @Test
@@ -38,6 +38,6 @@ class DatabaseFileTest {
         file.delete()
         assertTrue(!helper.exists(), "db file still exists")
         val size = file.size()
-        assertEquals(-1L, size, "size should be -1, instead: $size")
+        assertEquals(null, size, "size should be null, instead: $size")
     }
 }

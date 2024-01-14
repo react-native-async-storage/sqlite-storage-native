@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = SqliteStorageFactory(this).create("my_db")
+        db.files.size()
         setContent {
             MainScreen(db)
         }
