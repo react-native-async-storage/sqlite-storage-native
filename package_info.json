@@ -1,0 +1,21 @@
+{
+  "name": "Async Storage SQLite",
+  "version": "0.0.1",
+  "description": "Multiplatform sqlite storage for React Native Async Storage",
+  "author": "Krzysztof Borowy",
+  "homepage": "https://github.com/react-native-async-storage/sqlite-storage-kmp",
+  "repository": "https://github.com/react-native-async-storage/sqlite-storage-kmp.git",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/react-native-async-storage/sqlite-storage-kmp/blob/main/LICENSE.md",
+    "date": "2023"
+  },
+  "darwin": {
+    "podspec_name": "AsyncStorageSQLiteKMP",
+    "xcframework_name": "SQLiteStorageKMP"
+  },
+  "android": {
+    "group": "io.github.react-native-async-storage",
+    "artifact_id": "async-storage-sqlite"
+  }
+}

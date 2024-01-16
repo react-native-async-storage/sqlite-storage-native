@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.asyncstorage.sqlite.android.example.ui.components.SingleValue
-import org.asyncstorage.sqlitestorage.SqliteStorage
+import org.asyncstorage.sqlitestorage.SQLiteStorage
 
 
 @Composable
-fun MainScreen(db: SqliteStorage) {
+fun MainScreen(db: SQLiteStorage) {
     Column(
         modifier = Modifier
             .fillMaxSize()

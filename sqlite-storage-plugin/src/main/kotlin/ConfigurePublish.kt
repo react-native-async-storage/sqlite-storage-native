@@ -8,32 +8,30 @@ import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
 
 
-// todo: configure task for easier publishing
-fun Project.configurePublish(info: PackageInfoExtension) {
+internal fun Project.configurePublish(info: PackageInfoExtension) {
     (project as ExtensionAware).extensions.configure<MavenPublishBaseExtension> {
         publishToMavenCentral(SonatypeHost.S01)
         signAllPublications()
 
         coordinates(
-            groupId = "io.github.react-native-async-storage",
-            artifactId = "sqlite-storage",
+            groupId = info.android.group,
+            artifactId = info.android.artifactId,
             version = info.version
         )
         pom {
             name.set(info.name)
             description.set(info.description)
-            inceptionYear.set("2023")
-            url.set(info.repoUrl)
+            inceptionYear.set(info.license.date)
+            url.set(info.repository)
             licenses {
                 license {
-                    name.set("MIT")
-                    url.set("https://github.com/react-native-async-storage/sqlite-storage/blob/main/LICENSE.md")
+                    name.set(info.license.type)
+                    url.set(info.license.url)
                 }
             }
             developers {
                 developer {
-                    name.set("Krzysztof Borowy")
-                    url.set("https://github.com/krizzu")
+                    name.set(info.author)
                 }
             }
         }

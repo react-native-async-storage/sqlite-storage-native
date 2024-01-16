@@ -1,6 +1,8 @@
 [versions]
-kotlin = "1.9.20"
+kotlin = "1.9.22"
 agp = "8.1.1"
+ksp = "1.9.22-1.0.16"
+nativeCoroutines = "1.0.0-ALPHA-24"
 sqldelight = "2.0.1"
 coroutines = "1.7.3"
 ktx-serialization = "1.6.0"

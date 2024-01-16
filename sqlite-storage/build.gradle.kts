@@ -6,25 +6,24 @@ plugins {
     kotlin("plugin.serialization")
     id("sqlite-storage-plugin")
     id("app.cash.sqldelight")
+    id("com.google.devtools.ksp")
+    id("com.rickclephas.kmp.nativecoroutines")
 }
 
 
 kotlin {
     androidTarget()
-    val xcf = XCFramework("SqliteStorage")
+    val xcf = XCFramework(packageInfo.darwin.xcframeworkName)
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { target ->
         target.binaries.framework {
-            baseName = "SqliteStorage"
+            baseName = packageInfo.darwin.xcframeworkName
             xcf.add(this)
         }
     }
-
-
-
     // disable expect-actual warning
     targets.all {
         compilations.all {
@@ -38,6 +37,10 @@ kotlin {
     jvmToolchain(11)
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+        }
+
         commonMain {
             dependencies {
                 implementation(libs.bundles.common.main)
@@ -78,9 +81,9 @@ sqldelight {
     }
 }
 
-asyncStorage {
-    outputDir.set(rootProject.file("nativeLib"))
-    binaryName.set("sqlite-storage-${version}")
+sqliteStorage {
+    iosOutputDir.set(rootProject.layout.projectDirectory.dir(packageInfo.darwin.podspecName).asFile)
+    binaryName.set(packageInfo.darwin.xcframeworkName)
 }
 
 android {

@@ -1,19 +1,32 @@
 import SwiftUI
-import SqliteStorage
+import AsyncStorageSQLiteKMP
 
 struct ContentView: View {
-    let db = DbAccess()
+    let db = AsyncStorageSQLite(name: "example.db")
+    let randomKey = "random"
     
-    @MainActor
+    
     func writeRandom() {
-        Task.init {
-            let key="random_test"
-            let value = String(repeating: "x", count: Int.random(in: 1000...10000))
-            let entry = Entry(key: key, value: value)
-            
-            try! await db.saveEntry(entry: entry)
-            let result = try! await db.readEntry(key: key)
-            print("Random result: \(result)")
+        Task {
+            let value = String(Int.random(in: 1...1000))
+            let entry = Entry(key: randomKey, value: value)
+            print("saving random value")
+            try! await db.write(entry: entry)
+        }
+    }
+    
+    func readRandom() {
+        Task {
+            let value = try! await db.read(key: randomKey)
+            print("random value read: \(value)")
+        }
+    }
+    
+    func readEntriesAsAsyncSequence() {
+        Task {
+            for try await keys in db.readAsFlow(keys: ["random"]) {
+                print("entries are: \(keys)")
+            }
         }
     }
     
@@ -26,11 +39,11 @@ struct ContentView: View {
             {"a":987,"c":[4,5,6],"e":{"e1":false,"e3":888},"f":"new_entry"}
         """
         // merged: {"a":987,"b":true,"c":[0,1,2,3,4,5,6],"d":null,"e":{"e1":false,"e2":null,"e3":888},"f":"new_entry"}
-        Task.init {
-            try! await db.saveEntry(entry: Entry(key: "merge_test", value: obj1))
-            let result = try! await db.mergeEntry(entry: Entry(key: "merge_test", value: obj2))
-            print("Merge result: \(result)")
-        }
+//        Task.init {
+//            try! await db.saveEntry(entry: Entry(key: "merge_test", value: obj1))
+//            let result = try! await db.mergeEntry(entry: Entry(key: "merge_test", value: obj2))
+//            print("Merge result: \(result)")
+//        }
     }
     
     var body: some View {
@@ -38,14 +51,22 @@ struct ContentView: View {
             Button("Insert random") {
                 writeRandom()
             }
+            Button("Read random") {
+                readRandom()
+            }
             Button("Print location") {
-                db.printLocation()
+                db.files.path(type: .main)
+            }
+            Button("read keys as flow") {
+                readEntriesAsAsyncSequence()
             }
             Button("Drop database") {
-                db.dropDatabase()
+                Task {
+                    try await db.closeConnection()
+                }
             }
             Button("Read db size") {
-                db.getSize()
+                print("db size: \(db.files.size(type: .main))")
             }
             Button("Merge and print result") {
                 mergeEntries()

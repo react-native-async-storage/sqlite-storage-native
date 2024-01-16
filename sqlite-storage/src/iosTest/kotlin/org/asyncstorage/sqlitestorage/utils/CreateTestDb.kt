@@ -4,15 +4,15 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
 import kotlinx.coroutines.CoroutineDispatcher
-import org.asyncstorage.sqlitestorage.DefaultSqliteStorage
+import org.asyncstorage.sqlitestorage.DefaultSQLiteStorage
 import org.asyncstorage.sqlitestorage.IosDatabaseFile
-import org.asyncstorage.sqlitestorage.SqliteStorage
+import org.asyncstorage.sqlitestorage.SQLiteStorage
 import org.asyncstorage.sqlitestorage.db.AsyncStorageDB
 
 actual fun createTestDatabase(
     dbName: String,
     dispatcher: CoroutineDispatcher,
-): SqliteStorage {
+): SQLiteStorage {
     val config =
         DatabaseConfiguration(
             name = dbName,
@@ -33,5 +33,5 @@ actual fun createTestDatabase(
         )
     val driver = NativeSqliteDriver(configuration = config)
     val dbFile = IosDatabaseFile(dbName)
-    return DefaultSqliteStorage(driver, dbFile, dispatcher)
+    return DefaultSQLiteStorage(driver, dbFile, dispatcher)
 }

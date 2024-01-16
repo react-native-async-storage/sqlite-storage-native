@@ -1,11 +1,11 @@
-# Async Storage Sqlite
+# Async Storage SQLite
 
-Multiplatform sqlite storage for React Native AsyncStorage
+Multiplatform SQLite storage for React Native Async Storage
 
 ## Usage
 
 ```groovy
-implementation("io.github.react-native-async-storage:sqlite-storage:VERSION")
+implementation("io.github.react-native-async-storage:async-storage-sqlite:VERSION")
 ```
 
 ## Testing
@@ -24,5 +24,7 @@ Re-running tests when tasks are up-to-date:
 
 ## Release
 
-- Update version in `package.json` file, via `yarn version --patch|minor|major --no-git-tag-version`
-- commit and push version bump to repo
+1. Update version in `package_info.json`
+2. Build binaries `bundleSQLiteStorage`
+3. Commit and tag 
+4. Push to repo

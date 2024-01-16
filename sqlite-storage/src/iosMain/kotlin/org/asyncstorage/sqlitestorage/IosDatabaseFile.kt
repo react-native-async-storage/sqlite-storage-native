@@ -24,7 +24,7 @@ internal class IosDatabaseFile(private val dbName: String) : DatabaseFiles {
                 NSUserDomainMask,
                 true,
             ) as List<String>
-        val bundleId = NSBundle.mainBundle.bundleIdentifier ?: "SqliteStorage"
+        val bundleId = NSBundle.mainBundle.bundleIdentifier ?: "SQLiteStorage"
         val docDirectory = paths.first()
         "$docDirectory/$bundleId/databases"
     }

@@ -27,11 +27,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import org.asyncstorage.sqlitestorage.SqliteStorage
+import org.asyncstorage.sqlitestorage.SQLiteStorage
 import org.asyncstorage.sqlitestorage.models.Entry
 
 @Composable
-fun SingleValue(db: SqliteStorage) {
+fun SingleValue(db: SQLiteStorage) {
     val key = "my_single_value_key"
     var input by remember { mutableStateOf("") }
     var valueRead by remember { mutableStateOf<String?>(null) }

@@ -8,6 +8,6 @@ import javax.inject.Inject
 abstract class BundleExtension(
     @Inject private val project: Project,
 ) {
-    val outputDir: DirectoryProperty = project.objects.directoryProperty()
+    val iosOutputDir: DirectoryProperty = project.objects.directoryProperty()
     val binaryName: Property<String> = project.objects.property(String::class.java)
 }
