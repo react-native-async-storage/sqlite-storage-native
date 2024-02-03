@@ -2,13 +2,25 @@
 
 Multiplatform SQLite storage for React Native Async Storage
 
-## Usage
+## Installation
+
+### Android
 
 ```groovy
 implementation("io.github.react-native-async-storage:async-storage-sqlite:VERSION")
 ```
 
-## Testing
+### iOS (CocoaPods)
+
+```ruby
+pod 'AsyncStorageSQLiteKMP', 'VERSION'
+```
+
+## Usage
+
+todo
+
+## Running tests
 
 Gradle tasks to run tests:
 
@@ -21,10 +33,3 @@ Gradle tasks to run tests:
 Re-running tests when tasks are up-to-date:
 
 `./gradlew :sqlite-storage:storageTests --rerun-tasks`
-
-## Release
-
-1. Update version in `package_info.json`
-2. Build binaries `bundleSQLiteStorage`
-3. Commit and tag 
-4. Push to repo
