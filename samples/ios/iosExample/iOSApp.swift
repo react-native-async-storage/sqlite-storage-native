@@ -4,7 +4,10 @@ import SwiftUI
 struct iOSApp: App {
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+            TabView {
+                BasicPage()
+                    .tabItem { Label("Basic", systemImage: "figure.walk.circle").labelStyle(.titleAndIcon) }
+            }
 		}
 	}
 }
