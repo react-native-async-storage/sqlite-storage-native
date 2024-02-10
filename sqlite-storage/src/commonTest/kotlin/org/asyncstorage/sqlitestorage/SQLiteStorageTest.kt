@@ -155,6 +155,10 @@ class SQLiteStorageTest {
                 // bring back to original value
                 db.write(Entry("1", "value1"))
                 assertEquals(entries, awaitItem(), "entries not matching expected original value")
+
+                // should report all requested entries, even if some were removed
+                db.remove("1")
+                assertEquals(listOf(Entry("1", null), Entry("2", "value2")), awaitItem())
             }
         }
 

@@ -38,6 +38,11 @@ internal class DefaultSQLiteStorage(
         return queries.getMany(keys, ::Entry)
             .asFlow()
             .mapToList(dispatcher)
+            .map { current ->
+                keys.map { key ->
+                    current.find { it.key == key } ?: Entry(key, null)
+                }
+            }
     }
 
     override suspend fun write(entry: Entry) =

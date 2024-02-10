@@ -39,6 +39,7 @@ interface SQLiteStorage {
 
     /**
      * Equivalent to [readMany] function, but returns a Flow of List of entries instead.
+     * If at least one entry in the [keys] list changes, all of them are being retrieved and returned.
      * Throws if DB connection is closed.
      */
     @Throws(Throwable::class)
