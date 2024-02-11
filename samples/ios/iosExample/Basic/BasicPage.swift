@@ -20,7 +20,7 @@ struct BasicPage: View {
             if let database {
                 VStack {
                     Divider()
-                    BasicCRUDView(db: database)
+                    BasicView(db: database)
                 }.id(database.name)
                 
             }

@@ -1,9 +1,7 @@
 package org.asyncstorage.sqlitestorage
 
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 import org.asyncstorage.sqlitestorage.extensions.isValidJson
 import org.asyncstorage.sqlitestorage.utils.JunitRunner
 import org.asyncstorage.sqlitestorage.utils.RunWith
@@ -45,36 +43,172 @@ class MergeTest {
 
     @Test
     fun merges_json_objects_deeply() {
-        val merged =
-            Json.parseToJsonElement(
-                mergePossibleJsonValues(
-                    OldJsonValue,
-                    NewJsonValue,
-                )!!,
-            ).jsonObject
-        // primitive json values
-        listOf(
-            "a" to "100",
-            "b" to "false",
-            "b1" to "new",
-        ).forEach { (key: String, value: String) ->
-            assertTrue(merged.containsKey(key))
-            assertEquals(value, merged[key]!!.jsonPrimitive.content)
-        }
+        val old = """
+            {
+               "a": 100,
+               "b": true,
+               "c": [
+                  "a",
+                  "b"
+               ],
+               "d": {
+                  "d1": false,
+                  "d2": [
+                     123,
+                     456
+                  ],
+                  "d3": {
+                     "e": true,
+                     "f": null,
+                     "g": [
+                        true,
+                        true
+                     ]
+                  }
+               }
+            }
+        """.trimIndent()
+        val new = """
+            {
+               "b": false,
+               "b1": "new",
+               "c": [
+                  "c",
+                  "d"
+               ],
+               "d": {
+                  "d1": true,
+                  "d2": {
+                     "deep": true
+                  },
+                  "d3": {
+                     "e": null,
+                     "f": "new_value",
+                     "g": [
+                        false,
+                        false
+                     ]
+                  }
+               }
+            }
+        """.trimIndent()
+        val merged = """
+            {
+               "b": false,
+               "b1": "new",
+               "c": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+               ],
+               "d": {
+                  "d1": true,
+                  "d2": {
+                    "deep": true
+                  },
+                  "d3": {
+                     "e": null,
+                     "f": "new_value",
+                     "g": [
+                        true,
+                        true,
+                        false,
+                        false
+                     ]
+                  }
+               },
+               "a": 100
+            }
+        """.trimIndent()
 
-        assertTrue(merged.containsKey("c"))
-        assertEquals("""["a","b","c","d"]""", merged["c"]!!.jsonArray.toString())
+        val result = mergePossibleJsonValues(old, new)
+        assertEquals(merged.prettyJson(), result!!.prettyJson())
+    }
 
-        assertTrue(merged.containsKey("d"))
-        // nested "d" object
-        val dContent = merged["d"]!!.jsonObject
-        assertEquals("true", dContent["d1"]!!.jsonPrimitive.content)
-        assertEquals("""{"deep":true}""", dContent["d2"]!!.jsonObject.toString())
-        // nested "d3" object
-        val d3Content = dContent["d3"]!!.jsonObject
-        assertEquals("true", d3Content["e"]!!.jsonPrimitive.content)
-        assertEquals("new_value", d3Content["f"]!!.jsonPrimitive.content)
-        assertEquals("""[true,true,false,false]""", d3Content["g"]!!.jsonArray.toString())
+    @Test
+    fun merges_json_objects_deeply_2() {
+        val original = """
+            {
+               "index":0,
+               "isActive":false,
+               "age":29,
+               "name":"Johanna Sykes",
+               "tags":[
+                  "tag-0",
+                  "tag-1",
+                  "tag-2"
+               ],
+               "properties":{
+                  "topIndex":1,
+                  "inner":false,
+                  "innerList":[
+                     1,
+                     2,
+                     3
+                  ],
+                  "innerProp":{
+                     "keep":"me",
+                     "name":"original"
+                  }
+               }
+            }
+        """.trimIndent()
+        val new = """
+            {
+               "index":4,
+               "isActive":true,
+               "age":21,
+               "address":"6th street",
+               "tags":[
+                  "tag-4",
+                  "tag-3",
+                  "tag-0"
+               ],
+               "properties":{
+                  "topIndex":0,
+                  "inner":true,
+                  "innerList":[
+                     14,
+                     13,
+                     12
+                  ],
+                  "innerProp":{
+                     "name":"overridden",
+                     "newProp":true
+                  }
+               }
+            }
+        """.trimIndent()
+        val merged = """
+            {
+              "index": 4,
+              "isActive": true,
+              "age": 21,
+              "address": "6th street",
+              "tags": ["tag-0", "tag-1", "tag-2", "tag-4", "tag-3", "tag-0"],
+              "properties": {
+                "topIndex": 0,
+                "inner": true,
+                "innerList": [
+                  1,
+                  2,
+                  3,
+                  14,
+                  13,
+                  12
+                ],
+                "innerProp": {
+                  "name": "overridden",
+                  "newProp": true,
+                  "keep": "me"
+                }
+              },
+              "name": "Johanna Sykes"
+            }
+        """.trimIndent()
+        val result = mergePossibleJsonValues(original, new)
+        assertEquals(merged.prettyJson(), result!!.prettyJson())
     }
 
     @Test
@@ -86,53 +220,12 @@ class MergeTest {
     }
 }
 
-private val OldJsonValue =
-    """
-    {
-       "a": 100,
-       "b": true,
-       "c": [
-          "a",
-          "b"
-       ],
-       "d": {
-          "d1": false,
-          "d2": [
-             123,
-             456
-          ],
-          "d3": {
-             "e": true,
-             "f": null,
-             "g": [
-                true,
-                true
-             ]
-          }
-       }
+
+private fun String.prettyJson(): String {
+    val json = Json {
+        prettyPrint = true
+        prettyPrintIndent = " "
     }
-    """.trimIndent()
-private val NewJsonValue =
-    """
-    {
-       "b": false,
-       "b1": "new",
-       "c": [
-          "c",
-          "d"
-       ],
-       "d": {
-          "d1": true,
-          "d2": {
-             "deep": true
-          },
-          "d3": {
-             "f": "new_value",
-             "g": [
-                false,
-                false
-             ]
-          }
-       }
-    }
-    """.trimIndent()
+    val el = json.parseToJsonElement(this)
+    return json.encodeToString(el)
+}

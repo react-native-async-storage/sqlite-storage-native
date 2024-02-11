@@ -20,12 +20,11 @@ import org.asyncstorage.sqlitestorage.extensions.isValidJson
  * - if either value is not Json object or Json array, return new value
  * - if both values are valid JSON array, append new one to old one
  * - if both values are valid JSON object, map over combined array of keys from both objects:
- *   - create a merging object with empty key-value pairs
- *   - if key is unique to only one object, add its key/value to merging object
+ *   - if key is unique to only one object, keep its key/value
  *   - if key is present in both objects, it's value:
- *      - if primitive or null value, add new key/value to merging object
- *      - for arrays, append new one to old one, add to merging object
- *      - for objects, repeat merge algorithm
+ *      - if primitive or null value, keep new's key/value
+ *      - for arrays, append new one to old one
+ *      - for objects, repeat JSON object merge recursively
  */
 internal fun mergePossibleJsonValues(
     old: String?,
