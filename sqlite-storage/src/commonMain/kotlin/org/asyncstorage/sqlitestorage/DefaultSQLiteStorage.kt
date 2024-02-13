@@ -69,7 +69,6 @@ internal class DefaultSQLiteStorage(
             queries.deleteMany(keys)
         }
 
-
     override suspend fun merge(entry: Entry) =
         withContext(dispatcher) {
             queries.transactionWithResult {

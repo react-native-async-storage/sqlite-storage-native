@@ -43,7 +43,7 @@ internal class IosDatabaseFile(private val dbName: String) : DatabaseFiles {
         listOf(
             path(DatabaseFileType.Main),
             path(DatabaseFileType.Wal),
-            path(DatabaseFileType.Index)
+            path(DatabaseFileType.Index),
         ).forEach { file ->
             deleted += remove(file) == 0
         }

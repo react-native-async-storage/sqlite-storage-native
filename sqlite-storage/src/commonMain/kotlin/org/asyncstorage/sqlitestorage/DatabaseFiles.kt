@@ -1,6 +1,5 @@
 package org.asyncstorage.sqlitestorage
 
-
 // todo: bring implementation to common, rather per platform
 //       requires per platform file access
 interface DatabaseFiles {
@@ -32,5 +31,5 @@ interface DatabaseFiles {
 enum class DatabaseFileType {
     Main,
     Wal,
-    Index
+    Index,
 }

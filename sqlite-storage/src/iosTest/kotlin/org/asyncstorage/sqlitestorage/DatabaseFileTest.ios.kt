@@ -16,7 +16,7 @@ class IosDbUtilsTest {
         val dbName = "test-db"
         val file = createDatabaseFile(dbName)
         FileTestHelper.createFileAt(file.path())
-        val parentDir = "/data/Library/Application Support/SqliteStorage/databases"
+        val parentDir = "/data/Library/Application Support/SQLiteStorage/databases"
 
         with(file.path()) {
             assert(this.endsWith("$parentDir/$dbName")) {

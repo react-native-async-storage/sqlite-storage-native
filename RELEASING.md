@@ -8,8 +8,8 @@
 
 ### Versioning
 
-1. Update version in `package_info.json`
-2. Build binaries via `bundleSQLiteStorage` task
+1. Update version in [package_info.json](package_info.json) AND [README.md](README.md)
+2. Build binaries via `bundleSQLiteStorage` gradle task
 3. Commit changes (name it `release: MAJOR.MINOR.PATCH`)
 4. Create tag (name it `MAJOR.MINOR.PATCH`)
 5. Push commit and tag to `main`

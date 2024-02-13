@@ -26,14 +26,14 @@ class AndroidDatabaseFileTest {
         }
 
         with(file.path(DatabaseFileType.Index)) {
-            assert(this.endsWith("${dbName}-shm")) {
-                "index path not matching, expected: ${dbName}-shm, received: $this"
+            assert(this.endsWith("$dbName-shm")) {
+                "index path not matching, expected: $dbName-shm, received: $this"
             }
         }
 
         with(file.path(DatabaseFileType.Wal)) {
-            assert(this.endsWith("${dbName}-wal")) {
-                "wal path not matching, expected: ${dbName}-wal, received: $this"
+            assert(this.endsWith("$dbName-wal")) {
+                "wal path not matching, expected: $dbName-wal, received: $this"
             }
         }
     }

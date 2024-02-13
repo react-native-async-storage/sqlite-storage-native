@@ -43,7 +43,8 @@ class MergeTest {
 
     @Test
     fun merges_json_objects_deeply() {
-        val old = """
+        val old =
+            """
             {
                "a": 100,
                "b": true,
@@ -67,8 +68,9 @@ class MergeTest {
                   }
                }
             }
-        """.trimIndent()
-        val new = """
+            """.trimIndent()
+        val new =
+            """
             {
                "b": false,
                "b1": "new",
@@ -91,8 +93,9 @@ class MergeTest {
                   }
                }
             }
-        """.trimIndent()
-        val merged = """
+            """.trimIndent()
+        val merged =
+            """
             {
                "b": false,
                "b1": "new",
@@ -120,7 +123,7 @@ class MergeTest {
                },
                "a": 100
             }
-        """.trimIndent()
+            """.trimIndent()
 
         val result = mergePossibleJsonValues(old, new)
         assertEquals(merged.prettyJson(), result!!.prettyJson())
@@ -128,7 +131,8 @@ class MergeTest {
 
     @Test
     fun merges_json_objects_deeply_2() {
-        val original = """
+        val original =
+            """
             {
                "index":0,
                "isActive":false,
@@ -153,8 +157,9 @@ class MergeTest {
                   }
                }
             }
-        """.trimIndent()
-        val new = """
+            """.trimIndent()
+        val new =
+            """
             {
                "index":4,
                "isActive":true,
@@ -179,8 +184,9 @@ class MergeTest {
                   }
                }
             }
-        """.trimIndent()
-        val merged = """
+            """.trimIndent()
+        val merged =
+            """
             {
               "index": 4,
               "isActive": true,
@@ -206,7 +212,7 @@ class MergeTest {
               },
               "name": "Johanna Sykes"
             }
-        """.trimIndent()
+            """.trimIndent()
         val result = mergePossibleJsonValues(original, new)
         assertEquals(merged.prettyJson(), result!!.prettyJson())
     }
@@ -220,12 +226,12 @@ class MergeTest {
     }
 }
 
-
 private fun String.prettyJson(): String {
-    val json = Json {
-        prettyPrint = true
-        prettyPrintIndent = " "
-    }
+    val json =
+        Json {
+            prettyPrint = true
+            prettyPrintIndent = " "
+        }
     val el = json.parseToJsonElement(this)
     return json.encodeToString(el)
 }
