@@ -1,6 +1,6 @@
 # Async Storage SQLite
 
-Multiplatform SQLite storage for React Native Async Storage
+Multiplatform native wrapper of SQLite for React Native Async Storage
 
 ## Installation
 

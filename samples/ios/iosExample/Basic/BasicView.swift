@@ -1,13 +1,5 @@
-//
-//  OperationsView.swift
-//  iosExample
-//
-//  Created by Krzysztof Borowy on 07/02/2024.
-//  Copyright © 2024 orgName. All rights reserved.
-//
-
 import SwiftUI
-import AsyncStorageSQLiteKMP
+import AsyncStorageSQLite
 
 
 private let KEY = "random"

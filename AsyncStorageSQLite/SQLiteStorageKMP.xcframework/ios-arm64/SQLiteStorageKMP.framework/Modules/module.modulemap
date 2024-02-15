@@ -1,0 +1,8 @@
+framework module SQLiteStorageKMP {
+    umbrella header "SQLiteStorageKMP.h"
+
+    export *
+    module * { export * }
+
+    use Foundation
+}

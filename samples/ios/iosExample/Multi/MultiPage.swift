@@ -1,5 +1,5 @@
 import SwiftUI
-import AsyncStorageSQLiteKMP
+import AsyncStorageSQLite
 
 
 private let DatabaseName = "multiple-example.db"
