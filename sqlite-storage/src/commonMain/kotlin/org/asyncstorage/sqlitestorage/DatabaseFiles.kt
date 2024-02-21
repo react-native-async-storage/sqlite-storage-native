@@ -19,7 +19,7 @@ interface DatabaseFiles {
     fun delete(): Boolean
 
     /**
-     * Returns a size of a selected database file
+     * Returns a size of a selected database file in bytes
      * If the file does not exists or cannot be read for some reason, returns null
      */
     fun size(type: DatabaseFileType = DatabaseFileType.Main): Long?

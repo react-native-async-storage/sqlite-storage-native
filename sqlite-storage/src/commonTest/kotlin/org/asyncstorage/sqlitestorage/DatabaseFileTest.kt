@@ -25,9 +25,10 @@ class DatabaseFileTest {
         val file = createDatabaseFile(dbName)
         val helper = FileTestHelper.createFileAt(file.path())
         assertTrue(helper.exists(), "db file not created")
-        helper.fillWithChars(2048)
-        val size = file.size()
-        assertTrue(size == 2L, "size not matching $size")
+        helper.fillWithChars(500, "a") // 1 byte in UTF8
+        val size1 = file.size()
+        val expected1 = 500L
+        assertEquals(expected1, size1, "size miss match")
     }
 
     @Test

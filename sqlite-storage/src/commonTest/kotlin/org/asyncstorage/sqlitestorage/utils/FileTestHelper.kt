@@ -8,7 +8,7 @@ expect class FileTestHelper(path: String) {
         ): FileTestHelper
     }
 
-    fun fillWithChars(charCount: Int)
+    fun fillWithChars(charCount: Int, char: String = "")
 
     fun exists(): Boolean
 

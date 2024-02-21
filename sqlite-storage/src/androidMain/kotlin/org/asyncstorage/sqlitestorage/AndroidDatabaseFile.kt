@@ -33,7 +33,8 @@ internal class AndroidDatabaseFile(private val dbFile: File) : DatabaseFiles {
     override fun size(type: DatabaseFileType): Long? {
         val file = File(path(type))
         return if (file.exists()) {
-            (dbFile.length() / 1024L)
+            val length = dbFile.length()
+            if (length == 0L) return null else length
         } else {
             null
         }

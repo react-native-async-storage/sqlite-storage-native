@@ -42,8 +42,8 @@ actual class FileTestHelper actual constructor(path: String) {
         }
     }
 
-    actual fun fillWithChars(charCount: Int) {
-        val content = "x".repeat(charCount)
+    actual fun fillWithChars(charCount: Int, char: String) {
+        val content = char.repeat(charCount)
         try {
             (content as NSString).writeToFile(file, true)
         } catch (e: Throwable) {

@@ -55,8 +55,8 @@ internal class IosDatabaseFile(private val dbName: String) : DatabaseFiles {
         return try {
             val attrs = NSFileManager.defaultManager.attributesOfItemAtPath(file, null)
             val fileSize = attrs?.get(NSFileSize) as Long?
-            fileSize?.let {
-                it / 1024L
+            fileSize?.let { length ->
+                if (length == 0L) null else length
             }
         } catch (e: Exception) {
             return null
