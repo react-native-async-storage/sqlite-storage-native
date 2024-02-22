@@ -26,7 +26,7 @@ android {
         jvmToolchain(17)
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
@@ -40,4 +40,5 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.5.4")
     implementation("androidx.compose.foundation:foundation:1.5.4")
     implementation("androidx.compose.material:material:1.5.4")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
