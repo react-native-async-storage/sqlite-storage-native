@@ -2,11 +2,13 @@
 
 Multiplatform key-value storage backed by SQLite for React Native Async Storage
 
+![version badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Freact-native-async-storage%2Fsqlite-storage-native%2Fmain%2Fpackage_info.json&query=%24.version&style=flat&label=latest%20version&color=7956b7)
+
 ## Installation
 
 ### Android
 
-```groovy
+```kotlin
 implementation("io.github.react-native-async-storage:async-storage-sqlite:VERSION")
 ```
 

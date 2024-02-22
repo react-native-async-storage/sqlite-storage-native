@@ -2,7 +2,7 @@ site_name: Async Storage SQLite
 repo_url: https://github.com/react-native-async-storage/sqlite-storage-kmp
 
 nav:
-  - Getting started: index.md
+  - Quick start: index.md
   - Usage: usage.md
   - Changelog: changelog.md
 
