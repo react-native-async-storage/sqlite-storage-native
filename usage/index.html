@@ -12,6 +12,8 @@
         <link rel="prev" href="..">
       
       
+        <link rel="next" href="../changelog/">
+      
       
       <link rel="icon" href="../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
@@ -59,7 +61,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="orange">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -437,6 +439,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -628,8 +650,8 @@
 
   <h1>Usage</h1>
 
-<h2 id="sqlitestorage">SQLiteStorage</h2>
-<h3 id="creating-an-instance">Creating an instance</h3>
+<h2 id="sqlitestorage">SQLiteStorage<a class="headerlink" href="#sqlitestorage" title="Permanent link">&para;</a></h2>
+<h3 id="creating-an-instance">Creating an instance<a class="headerlink" href="#creating-an-instance" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kotlin</label><label for="__tabbed_1_2">swift</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -648,7 +670,7 @@
 </div>
 </div>
 </div>
-<h3 id="reading">Reading</h3>
+<h3 id="reading">Reading<a class="headerlink" href="#reading" title="Permanent link">&para;</a></h3>
 <p>To read a single entry from the database, use the <code>read</code> method.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kotlin</label><label for="__tabbed_2_2">swift</label></div>
 <div class="tabbed-content">
@@ -715,7 +737,7 @@ entries.</p>
 </div>
 </div>
 </div>
-<h3 id="writing">Writing</h3>
+<h3 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h3>
 <p>To write a single entry to the database, use the <code>write</code> method.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kotlin</label><label for="__tabbed_5_2">swift</label></div>
 <div class="tabbed-content">
@@ -758,7 +780,7 @@ entries.</p>
 </div>
 </div>
 </div>
-<h3 id="removing">Removing</h3>
+<h3 id="removing">Removing<a class="headerlink" href="#removing" title="Permanent link">&para;</a></h3>
 <p>To remove a single entry from the database, use the <code>remove</code> method.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">kotlin</label><label for="__tabbed_7_2">swift</label></div>
 <div class="tabbed-content">
@@ -795,7 +817,7 @@ entries.</p>
 </div>
 </div>
 </div>
-<h3 id="merging">Merging</h3>
+<h3 id="merging">Merging<a class="headerlink" href="#merging" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Merging rules:</p>
@@ -858,7 +880,7 @@ entries.</p>
 </div>
 </div>
 </div>
-<h3 id="reading-keys">Reading keys</h3>
+<h3 id="reading-keys">Reading keys<a class="headerlink" href="#reading-keys" title="Permanent link">&para;</a></h3>
 <p>To retrieve all keys used to store entries in the database, use the <code>readKeys</code> method.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">kotlin</label><label for="__tabbed_11_2">swift</label></div>
 <div class="tabbed-content">
@@ -902,7 +924,7 @@ trigger an emit of the key list again.</p>
 </div>
 </div>
 </div>
-<h3 id="clearing">Clearing</h3>
+<h3 id="clearing">Clearing<a class="headerlink" href="#clearing" title="Permanent link">&para;</a></h3>
 <p>To clear all entries from the database, use the <code>clear</code> method.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -924,7 +946,7 @@ trigger an emit of the key list again.</p>
 </div>
 </div>
 </div>
-<h3 id="close-connection">Close connection</h3>
+<h3 id="close-connection">Close connection<a class="headerlink" href="#close-connection" title="Permanent link">&para;</a></h3>
 <p>To close the connection to the storage, use <code>closeConnection()</code> method. Before closing,
 the <a href="https://www.sqlite.org/pragma.html#pragma_optimize"><code>PRAGMA optimize;</code></a> is executed.</p>
 <div class="admonition warning">
@@ -943,10 +965,10 @@ the <a href="https://www.sqlite.org/pragma.html#pragma_optimize"><code>PRAGMA op
 </div>
 </div>
 </div>
-<h2 id="databasefiles">DatabaseFiles</h2>
+<h2 id="databasefiles">DatabaseFiles<a class="headerlink" href="#databasefiles" title="Permanent link">&para;</a></h2>
 <p>The <code>DatabaseFiles</code> interface provides methods to access information about database files for
 given <code>SQLiteStorage</code> instance.</p>
-<h3 id="path-to-a-storage-file">Path to a storage file</h3>
+<h3 id="path-to-a-storage-file">Path to a storage file<a class="headerlink" href="#path-to-a-storage-file" title="Permanent link">&para;</a></h3>
 <p>Returns an absolute path to the selected database file. Default type is <code>DatabaseFileType.Main</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">kotlin</label><label for="__tabbed_15_2">swift</label></div>
 <div class="tabbed-content">
@@ -960,7 +982,7 @@ given <code>SQLiteStorage</code> instance.</p>
 </div>
 </div>
 </div>
-<h3 id="path-to-containing-directory">Path to containing directory</h3>
+<h3 id="path-to-containing-directory">Path to containing directory<a class="headerlink" href="#path-to-containing-directory" title="Permanent link">&para;</a></h3>
 <p>Returns an absolute path to a directory containing database files.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="16:2"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><input id="__tabbed_16_2" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">kotlin</label><label for="__tabbed_16_2">swift</label></div>
 <div class="tabbed-content">
@@ -974,7 +996,7 @@ given <code>SQLiteStorage</code> instance.</p>
 </div>
 </div>
 </div>
-<h3 id="delete-database-file">Delete database file</h3>
+<h3 id="delete-database-file">Delete database file<a class="headerlink" href="#delete-database-file" title="Permanent link">&para;</a></h3>
 <p>Removes the database file and all related Write-Ahead Logging (WAL) files (<code>-wal</code> and <code>-shm</code>).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -992,7 +1014,7 @@ given <code>SQLiteStorage</code> instance.</p>
 </div>
 </div>
 </div>
-<h3 id="file-size">File size</h3>
+<h3 id="file-size">File size<a class="headerlink" href="#file-size" title="Permanent link">&para;</a></h3>
 <p>Returns the size of a selected database file in bytes. If the file does not exist or cannot be read for some
 reason, returns <code>null</code>.</p>
 <div class="admonition info">
@@ -1014,7 +1036,7 @@ reason, returns <code>null</code>.</p>
 </div>
 </div>
 </div>
-<h3 id="databasefiletype">DatabaseFileType</h3>
+<h3 id="databasefiletype">DatabaseFileType<a class="headerlink" href="#databasefiletype" title="Permanent link">&para;</a></h3>
 <p>The <code>DatabaseFileType</code> enum defines the types of database files. Refer
 to <a href="https://www.sqlite.org/walformat.html">SQLite WAL Format</a> for more information on the WAL
 file format.</p>
