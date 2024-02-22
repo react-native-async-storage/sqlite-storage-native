@@ -1,6 +1,6 @@
 # Async Storage SQLite
 
-Multiplatform native wrapper of SQLite for React Native Async Storage
+Multiplatform key-value storage backed by SQLite for React Native Async Storage
 
 ## Installation
 
@@ -16,11 +16,52 @@ implementation("io.github.react-native-async-storage:async-storage-sqlite:VERSIO
 pod 'AsyncStorageSQLiteKMP', 'VERSION'
 ```
 
-## Usage
+## Quick start
 
-todo
+Visit [Usage page](https://react-native-async-storage.github.io/sqlite-storage-native/usage/) to learn more
 
-## Running tests
+
+### Android
+
+```kotlin
+import org.asyncstorage.sqlitestorage.SQLiteStorageFactory
+
+val storage = SQLiteStorageFactory(this).create("my_database_name")
+
+suspend fun single(): Entry {
+  val entry = storage.read("my_key")
+  return entry
+}
+
+suspend fun singleWrite() {
+  val entry = Entry("my_key", "my_value")
+  storage.write(entry)
+}
+```
+
+
+### iOS
+
+```swift
+import AsyncStorageSQLite
+
+let storage = AsyncStorageSQLite("my_database_name")
+
+func single() async throws -> Entry {
+    let entry = try await storage.read(key: "my_key")
+    return entry
+}
+
+func singleWrite() async throws {
+    let entry = Entry(key: "my_key", value: "my_value")
+    try await storage.write(entry: entry)
+}
+```
+
+
+## Contributing
+
+### Tests
 
 Gradle tasks to run tests:
 

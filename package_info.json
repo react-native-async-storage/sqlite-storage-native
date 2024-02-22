@@ -1,7 +1,7 @@
 {
   "name": "Async Storage SQLite",
   "version": "0.0.1",
-  "description": "Multiplatform native wrapper of SQLite for React Native Async Storage",
+  "description": "Multiplatform key-value storage backed by SQLite for React Native Async Storage",
   "author": "Krzysztof Borowy",
   "homepage": "https://github.com/react-native-async-storage/sqlite-storage-native",
   "repository": "https://github.com/react-native-async-storage/sqlite-storage-native.git",

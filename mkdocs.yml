@@ -4,12 +4,13 @@ repo_url: https://github.com/react-native-async-storage/sqlite-storage-kmp
 nav:
   - Getting started: index.md
   - Usage: usage.md
+  - Changelog: changelog.md
 
 theme:
   name: material
   palette:
     primary: deep purple
-    accent: orange
+    accent: amber
   icon:
     repo: fontawesome/brands/github
     logo: octicons/database-16
@@ -31,6 +32,8 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+  - toc:
+      permalink: true
 
 extra:
   social:

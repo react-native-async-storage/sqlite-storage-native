@@ -17,6 +17,9 @@ jobs:
           python-version: 3.11
       - name: Install MkDocs
         run: pip install mkdocs==1.5.3 mkdocs-material==9.5.10
+      - name: Copy changelog
+        run: |
+          cp CHANGELOG.md docs/changelog.md
       - name: Build docs
         run: mkdocs build
       - name: Deploy docs

@@ -56,3 +56,4 @@ android/keystores/debug.keystore
 
 # Built website
 site/
+docs/changelog.md
