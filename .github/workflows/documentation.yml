@@ -11,19 +11,19 @@ jobs:
   deploy-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: 3.11
       - name: Install MkDocs
-        run: pip install mkdocs-material
+        run: pip install mkdocs==1.5.3 mkdocs-material==9.5.10
       - name: Build docs
         run: mkdocs build
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: site
-          token: ${{ secrets.GH_TOKEN }}
-          git-config-name: ${{ secrets.GH_USERNAME }}
-          git-config-email: ${{ secrets.GH_EMAIL }}
+          token: ${{ secrets.GH_BOT_TOKEN }}
+          git-config-name: ${{ vars.GH_BOT_NAME }}
+          git-config-email: ${{ vars.GH_BOT_EMAIL }}
 
