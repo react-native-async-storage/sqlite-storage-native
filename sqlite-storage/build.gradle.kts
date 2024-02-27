@@ -12,7 +12,10 @@ plugins {
 
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        publishLibraryVariants("release")
+    }
+
     val xcf = XCFramework(packageInfo.darwin.xcframeworkName)
     listOf(
         iosX64(),

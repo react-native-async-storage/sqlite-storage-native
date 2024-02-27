@@ -14,7 +14,7 @@ internal fun Project.configurePublish(info: PackageInfoExtension) {
     }
 
     (project as ExtensionAware).extensions.configure<MavenPublishBaseExtension> {
-        publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
+        publishToMavenCentral(SonatypeHost.S01, automaticRelease = false)
         signAllPublications()
 
         coordinates(
