@@ -23,7 +23,10 @@ actual class FileTestHelper actual constructor(path: String) {
         }
     }
 
-    actual fun fillWithChars(charCount: Int, char: String) {
+    actual fun fillWithChars(
+        charCount: Int,
+        char: String,
+    ) {
         file.writeText(char.repeat(charCount))
     }
 
