@@ -76,3 +76,13 @@ Gradle tasks to run tests:
 Re-running tests when tasks are up-to-date:
 
 `./gradlew :sqlite-storage:storageTests --rerun-tasks`
+
+
+### Website
+
+1. Make sure Python 3 (v3.11.7+) and pip (v24.0+) is installed
+2. Follow installation steps from [MkDocs Material](https://squidfunk.github.io/mkdocs-material/getting-started/#installation)
+3. Run development docs:
+```shell
+mkdocs serve
+```
