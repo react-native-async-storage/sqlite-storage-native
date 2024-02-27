@@ -1,5 +1,5 @@
 # Changelog
 
-## [0.0.1] - 2024-XX-XX
+## [0.1.0] - 2024-02-27
 
 Initial release.
