@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.configure
 
 internal fun Project.configurePublish(info: PackageInfoExtension) {
     (project as ExtensionAware).extensions.configure<MavenPublishBaseExtension> {
-        publishToMavenCentral(SonatypeHost.S01)
+        publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
         signAllPublications()
 
         coordinates(
