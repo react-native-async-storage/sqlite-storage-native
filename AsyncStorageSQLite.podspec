@@ -6,15 +6,15 @@ podspecName   = info["darwin"]["podspec_name"]
 frameworkName = info["darwin"]["xcframework_name"]
 
 Pod::Spec.new do |spec|
-  spec.name         = podspecName
-  spec.version      = info["version"]
-  spec.summary      = info["description"]
-  spec.homepage     = info["homepage"]
-  spec.license      = info["license"]["type"]
-  spec.author       = info["author"]
-  spec.source       = { :git => info["repository"], :tag => "#{spec.version}" }
-
-  spec.platforms    = { :ios => "13.0" }
+  spec.name          = podspecName
+  spec.version       = info["version"]
+  spec.summary       = info["description"]
+  spec.homepage      = info["homepage"]
+  spec.license       = info["license"]["type"]
+  spec.author        = info["author"]
+  spec.source        = { :git => info["repository"], :tag => "#{spec.version}" }
+  spec.swift_version = "5.8"
+  spec.platforms     = { :ios => "13.0" }
 
   spec.vendored_frameworks = "#{podspecName}/#{frameworkName}.xcframework"
   spec.source_files = "#{podspecName}/src/**/*.{swift}"
