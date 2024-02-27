@@ -1,14 +1,18 @@
 package org.asyncstorage.sqlite.plugin
 
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.MavenPublishPlugin
 import com.vanniktech.maven.publish.SonatypeHost
 import org.asyncstorage.sqlite.plugin.extensions.PackageInfoExtension
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
 
-
 internal fun Project.configurePublish(info: PackageInfoExtension) {
+    project.apply {
+        plugin(MavenPublishPlugin::class.java)
+    }
+
     (project as ExtensionAware).extensions.configure<MavenPublishBaseExtension> {
         publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
         signAllPublications()
@@ -33,6 +37,9 @@ internal fun Project.configurePublish(info: PackageInfoExtension) {
                 developer {
                     name.set(info.author)
                 }
+            }
+            scm {
+                url.set(info.homepage)
             }
         }
     }

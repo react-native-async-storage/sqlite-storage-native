@@ -18,6 +18,7 @@ class StoragePlugin : Plugin<Project> {
             project.configureTesting()
             project.configureLint()
             project.configureBundle(bundleExt, infoExt)
+            project.configurePublish(infoExt)
         }
 }
 
