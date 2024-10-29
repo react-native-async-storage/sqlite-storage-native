@@ -41,7 +41,7 @@ test-turbine = { module = "app.cash.turbine:turbine", version = "0.12.1" }
 gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradlePlugin-testLogger = { module = "com.adarshr:gradle-test-logger-plugin", version = "3.2.0" }
 gradlePlugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
-gradlePlugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.27.0" }
+gradlePlugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.28.0" }
 
 [bundles]
 common-test = [
