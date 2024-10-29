@@ -10,10 +10,11 @@
 
 1. Update version in [package_info.json](package_info.json)
 2. Build binaries via `bundleSQLiteStorage` gradle task
-3. Commit changes (name it `release: MAJOR.MINOR.PATCH`)
-4. Create tag (name it `MAJOR.MINOR.PATCH`)
-5. Push commit and tag to `main`
-6. Create Github release
+3. Update CHANGELOG
+4. Commit changes (name it `release: MAJOR.MINOR.PATCH`)
+5. Create tag (name it `MAJOR.MINOR.PATCH`)
+6. Push commit and tag to `main`
+7. Create Github release
 
 ### Android
 
