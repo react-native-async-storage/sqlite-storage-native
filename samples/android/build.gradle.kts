@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.plugin.compose").version(libs.versions.kotlin)
     kotlin("android")
 }
 
@@ -9,7 +10,7 @@ android {
     namespace = "com.asyncstorage.sqlite.android.example"
     defaultConfig {
         applicationId = "com.asyncstorage.sqlite.android.example"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,14 +20,8 @@ android {
             isMinifyEnabled = false
         }
     }
-    buildFeatures {
-        compose = true
-    }
     kotlin {
         jvmToolchain(17)
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 

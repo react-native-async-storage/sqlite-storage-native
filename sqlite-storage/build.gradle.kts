@@ -1,13 +1,14 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    kotlin("plugin.serialization")
     id("sqlite-storage-plugin")
-    id("app.cash.sqldelight")
-    id("com.google.devtools.ksp")
-    id("com.rickclephas.kmp.nativecoroutines")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.nativecoroutines)
 }
 
 
@@ -15,7 +16,6 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release")
     }
-
     val xcf = XCFramework(packageInfo.darwin.xcframeworkName)
     listOf(
         iosX64(),
@@ -30,14 +30,13 @@ kotlin {
     // disable expect-actual warning
     targets.all {
         compilations.all {
-            compilerOptions.configure {
+            compileTaskProvider.get().compilerOptions {
                 freeCompilerArgs.add("-Xexpect-actual-classes")
             }
         }
     }
 
-
-    jvmToolchain(11)
+    jvmToolchain(17)
 
     sourceSets {
         all {
@@ -93,7 +92,7 @@ android {
     compileSdk = 34
     namespace = "org.asyncstorage.sqlitestorage"
     defaultConfig {
-        minSdk = 21
+        minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     testOptions {

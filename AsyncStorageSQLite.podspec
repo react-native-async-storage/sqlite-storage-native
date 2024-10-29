@@ -14,11 +14,11 @@ Pod::Spec.new do |spec|
   spec.author        = info["author"]
   spec.source        = { :git => info["repository"], :tag => "#{spec.version}" }
   spec.swift_version = "5.8"
-  spec.platforms     = { :ios => "13.0" }
+  spec.platforms     = { :ios => "16.0" }
 
   spec.vendored_frameworks = "#{podspecName}/#{frameworkName}.xcframework"
   spec.source_files = "#{podspecName}/src/**/*.{swift}"
 
-  spec.dependency "KMPNativeCoroutinesAsync", "1.0.0-ALPHA-24"
+  spec.dependency "KMPNativeCoroutinesAsync", "1.0.0-ALPHA-37"
 
 end

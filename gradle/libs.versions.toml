@@ -1,12 +1,23 @@
 [versions]
-kotlin = "1.9.22"
-agp = "8.1.1"
-ksp = "1.9.22-1.0.16"
-nativeCoroutines = "1.0.0-ALPHA-24"
-sqldelight = "2.0.1"
-coroutines = "1.7.3"
+kotlin = "2.0.21"
+agp = "8.5.0"
+ksp = "2.0.21-1.0.25"
+nativeCoroutines = "1.0.0-ALPHA-37"
+sqldelight = "2.0.2"
+coroutines = "1.9.0"
 ktx-serialization = "1.6.0"
 spotless = "6.23.3"
+
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+nativecoroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "nativeCoroutines" }
 
 [libraries]
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "ktx-serialization" }
