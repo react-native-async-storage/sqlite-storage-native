@@ -12,9 +12,9 @@ Pod::Spec.new do |spec|
   spec.homepage      = info["homepage"]
   spec.license       = info["license"]["type"]
   spec.author        = info["author"]
-  spec.source        = { :git => info["repository"], :tag => "#{spec.version}" }
+  spec.source        = { :git => info["repository"], :tag => "v#{spec.version}" }
   spec.swift_version = "5.8"
-  spec.platforms     = { :ios => "16.0" }
+  spec.platforms     = { :ios => "15.0" }
 
   spec.vendored_frameworks = "#{podspecName}/#{frameworkName}.xcframework"
   spec.source_files = "#{podspecName}/src/**/*.{swift}"
