@@ -1,8 +1,12 @@
 # Changelog
 
-## [0.1.2] - 2024-10-29
+## [0.1.3] - 2024-11-22
 
-- Changed min. iOS deployment target to 15
+- [Android] Changed minSdk to 24
+
+## [0.1.2] - 2024-11-18
+
+- [iOS] Changed min. deployment target to 15
 
 ## [0.1.1] - 2024-10-29
 

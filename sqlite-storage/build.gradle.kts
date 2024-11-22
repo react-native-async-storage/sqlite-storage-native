@@ -92,7 +92,7 @@ android {
     compileSdk = 34
     namespace = "org.asyncstorage.sqlitestorage"
     defaultConfig {
-        minSdk = 26
+        minSdk = 24
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     testOptions {
