@@ -18,8 +18,22 @@
 
 ### Android
 
+Run gradle task to push to Maven Central:
+
+```shell
+./gradlew publishToMavenCentral --no-configuration-cache
+```
+
+More:
 https://vanniktech.github.io/gradle-maven-publish-plugin/central/#publishing-releases
 
 ### iOS
 
+Run cocoapods `push` to push to main trunk:
+
+```shell
+pod trunk push AsyncStorageSQLite.podspec
+```
+
+More:
 https://guides.cocoapods.org/making/making-a-cocoapod.html#submitting-open-source-code
